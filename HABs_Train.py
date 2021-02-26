@@ -9,7 +9,6 @@
 # The model is trained using images from the Finger Lakes.
 
 # --------------- Import Libraries ---------------------------
-# import the necessary libraries and packages
 from keras.models import Sequential
 from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
@@ -26,12 +25,6 @@ from imutils import paths
 import numpy as np
 import argparse
 import os
-from keras.models import load_model
-import shutil
-import platform
-from pathlib import PurePosixPath
-from pathlib import PureWindowsPath
-from operator import itemgetter
 
 # ----------------- Get Command Line Arguments ------------------------
 # construct the argument parser and parse the arguments
@@ -57,7 +50,7 @@ for imagePath in imagePaths:
     # resize it to 32x32 pixels
     # scale the pixel intensities to the range [0,1]
     # divide by 255 because 255 is the max rgb value for each pixel, 0-255
-    # updatae the image list
+    # update the image list
     image = Image.open(imagePath)
     image = np.array(image.resize((32, 32))) / 255.0
     data.append(image)
