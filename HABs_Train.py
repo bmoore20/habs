@@ -16,15 +16,18 @@ from keras.layers.core import Activation
 from keras.layers.core import Flatten
 from keras.layers.core import Dense
 from keras.optimizers import Adam
-from sklearn.preprocessing import LabelBinarizer
-from sklearn.model_selection import train_test_split
+# from sklearn.preprocessing import LabelBinarizer
+# from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from PIL import Image
-from imutils import paths
+# from imutils import paths
+from typing import Tuple
+from pathlib import Path
 import numpy as np
 import argparse
 import os
+import torch
 
 # ----------------- Get Command Line Arguments ------------------------
 # construct the argument parser and parse the arguments
@@ -38,36 +41,50 @@ args = vars(ap.parse_args())
 # ----------------- Load Dataset --------------------------------------
 print("\n[INFO] loading images...")
 
-# grab all image paths in the input dataset directory
-# initialize lists of images and corresponding class labels
-imagePaths = paths.list_images(args["dataset"])
-data = []
-labels = []
 
-# loop over our input images
-for imagePath in imagePaths:
-    # load the input image from disk
-    # resize it to 32x32 pixels
-    # scale the pixel intensities to the range [0,1]
-    # divide by 255 because 255 is the max rgb value for each pixel, 0-255
-    # update the image list
-    image = Image.open(imagePath)
-    image = np.array(image.resize((32, 32))) / 255.0
-    data.append(image)
+class HABsDataset(torch.utils.data.Dataset):
+    # TODO - move to utils
+    # TODO - train vs test datasets
+    # TODO - torchvision -> transforms.Compose()
+    def __int__(self, data_dir: str, transform=None):
+        """Set of images from the Finger Lakes that consist of harmful algal blooms.
 
-    # extract the class label from the file path
-    # update the labels list
-    label = imagePath.split(os.path.sep)[-2]
-    labels.append(label)
+        :param data_dir: file path to root of dataset directory
+        :param transform: optional transform to be applied to a sample
+        :return:
+        """
+        self.data_dir = data_dir
 
-# encode the labels, converting them from strings to integers
-lb = LabelBinarizer()
-labels = lb.fit_transform(labels)
+    def __len__(self):
+        # number of images in directory
+        return len(os.listdir(self.data_dir))
 
-# -------------------- Split Data -------------------------------------
-# split data set into a training set a test set
-(trainX, testX, trainY, testY) = train_test_split(np.array(data),
-                                                  np.array(labels), test_size=0.10)
+    def _transform_rescale(self, image: Image) -> Image:
+        """Resize image to 32x32 pixels.
+           Scale the pixel intensities to the range [0,1]
+           Divide by 255 because 255 is the max rgb value for each pixel, 0-255
+
+        :param image: image to be scaled
+        :return: rescaled image
+        """
+        image = np.array(image.resize((32, 32))) / 255.0
+        return image
+
+    def __getitem__(self, idx) -> Tuple[Image, int]:
+        """Retrieve the ith sample of the dataset.
+
+        :param idx: the index of the sample to be retrieved
+        :return: the transformed image and its target in number form
+        """
+        # TODO - use pathlib.Path instead of imutils.paths -> imutils.paths is a 'generator' object
+        # TODO - get path_to_data
+        # TODO - make image names uniform with idx at end
+        # TODO - extract string label from path_to_data and convert to number representation (target)
+        # TODO - apply transforms to image
+        # TODO - return tuple of transformed image and target
+        ...
+
+# TODO - use DataLoader -> torch.utils.data.DataLoader
 
 # --------------------- Define Model -----------------------------------
 # define our Convolutional Neural Network architecture
