@@ -93,7 +93,7 @@ test_loader = DataLoader(test_data)
 
 # TODO - enumerate(train_loader), enumerate(test_loader)
 
-# # --------------------- Define Model -----------------------------------
+# --------------------- Define Model -----------------------------------
 # # define our Convolutional Neural Network architecture
 # model = Sequential()
 # model.add(Conv2D(8, (3, 3), padding="same", input_shape=(32, 32, 3)))
