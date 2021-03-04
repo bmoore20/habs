@@ -1,3 +1,5 @@
 opencv-contrib-python
 imutils
+torch
+torchvision
 
