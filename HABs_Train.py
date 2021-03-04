@@ -16,127 +16,134 @@ from keras.layers.core import Activation
 from keras.layers.core import Flatten
 from keras.layers.core import Dense
 from keras.optimizers import Adam
-# from sklearn.preprocessing import LabelBinarizer
-# from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
+from torch.utils.data import Dataset, DataLoader, random_split
 from PIL import Image
-# from imutils import paths
 from typing import Tuple
-from pathlib import Path
 import numpy as np
 import argparse
 import os
-import torch
 
 # ----------------- Get Command Line Arguments ------------------------
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", type=str, default="ImportedPics",
+ap.add_argument("-d", "--data_dir", type=str,
                 help="path to directory containing image dataset that is to be imported")
 ap.add_argument("-m", "--model", type=str, default="HABs_CNN_Model_FINAL.h5",
                 help="name of CNN model that will be saved")
 args = vars(ap.parse_args())
 
-# ----------------- Load Dataset --------------------------------------
-print("\n[INFO] loading images...")
 
+# ----------------- Create Dataset -------------------------------------
+class HABsDataset(Dataset):
+    # TODO - not memory efficient because images are all stored in memory first and not read as required
+    # TODO - one-hot-encode targets
+    # TODO - torchvision's transforms
+    # TODO - move HABsDataset to utils
+    # Referenced https://towardsdatascience.com/building-efficient-custom-datasets-in-pytorch-2563b946fd9f
 
-class HABsDataset(torch.utils.data.Dataset):
-    # TODO - move to utils
-    # TODO - train vs test datasets
-    # TODO - torchvision -> transforms.Compose()
-    def __int__(self, data_dir: str, transform=None):
-        """Set of images from the Finger Lakes that consist of harmful algal blooms.
-
-        :param data_dir: file path to root of dataset directory
-        :param transform: optional transform to be applied to a sample
-        :return:
-        """
-        self.data_dir = data_dir
+    def __init__(self, data_root: str):
+        self.data_root = data_root
+        self.data_samples = []
+        self._init_dataset()
 
     def __len__(self):
-        # number of images in directory
-        return len(os.listdir(self.data_dir))
+        return len(self.data_samples)
 
-    def _transform_rescale(self, image: Image) -> Image:
-        """Resize image to 32x32 pixels.
-           Scale the pixel intensities to the range [0,1]
-           Divide by 255 because 255 is the max rgb value for each pixel, 0-255
+    def _init_dataset(self):
+        for image_class in os.listdir(self.data_root):
+            image_path = os.path.join(self.data_root, image_class)
+            image = Image.open(image_path)
+            image = self._transform(image)
+            target = self._encode_target(image_class)
 
-        :param image: image to be scaled
-        :return: rescaled image
-        """
+            self.data_samples.append((image, target))
+
+    @staticmethod
+    def _encode_target(target: str) -> int:
+        if target == "bga":
+            return 0
+        elif target == "clear":
+            return 1
+        elif target == "turbid":
+            return 2
+        else:
+            raise ValueError("Cannot encode. Target must be bga, clear, or turbid.")
+
+    @staticmethod
+    def _transform(self, image: Image) -> Image:
         image = np.array(image.resize((32, 32))) / 255.0
         return image
 
     def __getitem__(self, idx) -> Tuple[Image, int]:
-        """Retrieve the ith sample of the dataset.
+        return self.data_samples[idx]
 
-        :param idx: the index of the sample to be retrieved
-        :return: the transformed image and its target in number form
-        """
-        # TODO - use pathlib.Path instead of imutils.paths -> imutils.paths is a 'generator' object
-        # TODO - get path_to_data
-        # TODO - make image names uniform with idx at end
-        # TODO - extract string label from path_to_data and convert to number representation (target)
-        # TODO - apply transforms to image
-        # TODO - return tuple of transformed image and target
-        ...
 
-# TODO - use DataLoader -> torch.utils.data.DataLoader
+# ----------------- Load and Split Dataset  --------------------------------
+print("\n[INFO] loading images...")
 
-# --------------------- Define Model -----------------------------------
-# define our Convolutional Neural Network architecture
-model = Sequential()
-model.add(Conv2D(8, (3, 3), padding="same", input_shape=(32, 32, 3)))
-model.add(Activation("relu"))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Conv2D(16, (3, 3), padding="same"))
-model.add(Activation("relu"))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Conv2D(32, (3, 3), padding="same"))
-model.add(Activation("relu"))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Flatten())
-model.add(Dense(3))
-model.add(Activation("softmax"))
+dataset = HABsDataset(args["dataset"])
+test_size = int(len(dataset) * 0.75)
+train_size = int(len(dataset) * 0.25)
+train_data, test_data = random_split(dataset, [test_size, train_size])
 
-# ------------------ Compile Model -----------------------------------
-# train the model using the Adam optimizer
-opt = Adam(lr=1e-3, decay=1e-3 / 50)
+train_loader = DataLoader(train_data)
+test_loader = DataLoader(test_data)
 
-# compile model
-model.compile(loss="categorical_crossentropy", optimizer=opt,
-              metrics=["accuracy"])
+# TODO - enumerate(train_loader), enumerate(test_loader)
 
-# -------------------  Run Trial -------------------------------------
-print("\n[INFO] training network...")
-
-# fit/train model
-trial = model.fit(trainX, trainY, validation_data=(testX, testY),
-                  epochs=50, batch_size=32)
-
-# get model's prediction
-predictions = model.predict(testX, batch_size=32)
-
-print("\n[INFO] results:")
-
-# get evaluation of model
-evaluation = model.evaluate(testX, testY, verbose=0)
-print("%s = %.2f%%" % (model.metrics_names[1], evaluation[1] * 100))
-
-# get classification report
-classReport = classification_report(testY.argmax(axis=1),
-                                    predictions.argmax(axis=1), target_names=lb.classes_)
-print("\nClassification Report Trial: ")
-print(classReport)
-
-# get confusion matrix
-print("Confusion Matrix Trial: ")
-print(confusion_matrix(testY.argmax(axis=1), predictions.argmax(axis=1)))
-
-# ---------------------- Save Model ------------------------------------
-# save trained model and architecture to single file
-model.save(args["model"])
-print("\nSaved model to disk.\n")
+# # --------------------- Define Model -----------------------------------
+# # define our Convolutional Neural Network architecture
+# model = Sequential()
+# model.add(Conv2D(8, (3, 3), padding="same", input_shape=(32, 32, 3)))
+# model.add(Activation("relu"))
+# model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+# model.add(Conv2D(16, (3, 3), padding="same"))
+# model.add(Activation("relu"))
+# model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+# model.add(Conv2D(32, (3, 3), padding="same"))
+# model.add(Activation("relu"))
+# model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+# model.add(Flatten())
+# model.add(Dense(3))
+# model.add(Activation("softmax"))
+#
+# # ------------------ Compile Model -----------------------------------
+# # train the model using the Adam optimizer
+# opt = Adam(lr=1e-3, decay=1e-3 / 50)
+#
+# # compile model
+# model.compile(loss="categorical_crossentropy", optimizer=opt,
+#               metrics=["accuracy"])
+#
+# # -------------------  Run Trial -------------------------------------
+# print("\n[INFO] training network...")
+#
+# # fit/train model
+# trial = model.fit(trainX, trainY, validation_data=(testX, testY),
+#                   epochs=50, batch_size=32)
+#
+# # get model's prediction
+# predictions = model.predict(testX, batch_size=32)
+#
+# print("\n[INFO] results:")
+#
+# # get evaluation of model
+# evaluation = model.evaluate(testX, testY, verbose=0)
+# print("%s = %.2f%%" % (model.metrics_names[1], evaluation[1] * 100))
+#
+# # get classification report
+# classReport = classification_report(testY.argmax(axis=1),
+#                                     predictions.argmax(axis=1), target_names=lb.classes_)
+# print("\nClassification Report Trial: ")
+# print(classReport)
+#
+# # get confusion matrix
+# print("Confusion Matrix Trial: ")
+# print(confusion_matrix(testY.argmax(axis=1), predictions.argmax(axis=1)))
+#
+# # ---------------------- Save Model ------------------------------------
+# # save trained model and architecture to single file
+# model.save(args["model"])
+# print("\nSaved model to disk.\n")
