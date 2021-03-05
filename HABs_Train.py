@@ -41,6 +41,7 @@ class HABsDataset(Dataset):
     # TODO - one-hot-encode targets
     # TODO - torchvision's transforms
     # TODO - move HABsDataset to utils
+    # TODO - handle train/test inside dataset or outside dataset
     # Referenced https://towardsdatascience.com/building-efficient-custom-datasets-in-pytorch-2563b946fd9f
 
     def __init__(self, data_root: str):
