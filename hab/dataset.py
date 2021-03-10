@@ -20,8 +20,11 @@ class HABsDataset(Dataset):
 
     def _get_image_paths(self):
         all_paths = Path(self.data_dir).glob("**/*")
+
+        # Only select image files. Ignore files that are not images.
         image_paths = [fp for fp in all_paths if (fp.name != ".DS_Store") and
                        (fp.parent.name == "bga" or fp.parent.name == "clear" or fp.parent.name == "turbid")]
+        
         return image_paths
 
     def _get_image(self, idx):
