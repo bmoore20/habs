@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from hab.dataset.dataset import HABsDataset
+from hab.dataset import HABsDataset
 from hab.model.model import HABsModelCNN
 
 # TODO - add transforms as parameters to HABsDataset initialization
