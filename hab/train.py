@@ -1,12 +1,14 @@
 from argparse import ArgumentParser
 from torch.utils.data import DataLoader, random_split
+from torchvision import transforms
 import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from hab.dataset import HABsDataset
+from hab.dataset.dataset import HABsDataset
 from hab.model.model import HABsModelCNN
 
+# TODO - add transforms as parameters to HABsDataset initialization
 # TODO - logger
 # TODO- check to see if pytorch weight_decay parameter is same as keras decay parameter
 # optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
@@ -14,6 +16,7 @@ from hab.model.model import HABsModelCNN
 
 def train(data_dir):
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
+    # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
 
     dataset = HABsDataset(data_dir)
     test_size = int(len(dataset) * 0.75)
