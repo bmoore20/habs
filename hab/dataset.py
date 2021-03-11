@@ -10,10 +10,14 @@ class HABsDataset(Dataset):
     # TODO - torchvision's transforms
     # TODO - specify typing for parameters and returns of all methods
 
-    def __init__(self, data_dir: str, transform=None):
+    def __init__(self, data_dir: str, mode: str = "train", transform=None):
         self.data_dir = data_dir
         self.transform = transform
         self.image_paths = self._get_image_paths()
+        if mode in {"train", "test", "classify"}:
+            self.mode = mode
+        else:
+            raise ValueError("Dataset mode must be either train, test, or classify. Value received: {}".format(mode))
 
     def __len__(self):
         return len(self.image_paths)
@@ -21,9 +25,12 @@ class HABsDataset(Dataset):
     def _get_image_paths(self):
         all_paths = Path(self.data_dir).glob("**/*")
 
-        # Only select image files. Ignore files that are not images.
-        image_paths = [fp for fp in all_paths if (fp.suffix == ".jpg") and
-                       (fp.parent.name == "bga" or fp.parent.name == "clear" or fp.parent.name == "turbid")]
+        if self.mode in {"train", "test"}:
+            # Only select image files that are in specified class directories
+            image_paths = [fp for fp in all_paths if fp.suffix == ".jpg" and fp.parent.name in {"bga", "clear", "turbid"}]
+        else:
+            # Images for classify do not have to be sorted into specific class directories
+            image_paths = [fp for fp in all_paths if fp.suffix == ".jpg"]
 
         return image_paths
 
@@ -57,7 +64,11 @@ class HABsDataset(Dataset):
     #     return image
 
     def __getitem__(self, idx):
-        image = self._get_image(idx)
-        target = self._make_target(idx)
-
-        return image, target
+        if self.mode in {"train", "test"}:
+            image = self._get_image(idx)
+            target = self._make_target(idx)
+            return image, target
+        else:
+            # Images to be classified do not have known target values
+            image = self._get_image(idx)
+            return image

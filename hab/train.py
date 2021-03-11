@@ -14,17 +14,15 @@ from hab.model.model import HABsModelCNN
 # optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
 
 
-def train(data_dir):
+def train(train_data_dir: str, test_data_dir: str):
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
 
-    dataset = HABsDataset(data_dir)
-    test_size = int(len(dataset) * 0.75)
-    train_size = int(len(dataset) * 0.25)
-    train_data, test_data = random_split(dataset, [test_size, train_size])
+    train_dataset = HABsDataset(train_data_dir, "train")
+    test_dataset = HABsDataset(test_data_dir, "test")
 
-    train_loader = DataLoader(train_data)
-    test_loader = DataLoader(test_data)
+    train_loader = DataLoader(train_dataset)
+    test_loader = DataLoader(test_dataset)
 
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(lr=1e-3)
