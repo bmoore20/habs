@@ -65,10 +65,11 @@ def train(train_data_dir: str, test_data_dir: str):
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument("--dataset", required=True, type=str, help="path to root directory that contains image dataset")
+    parser.add_argument("--train_dataset", required=True, type=str, help="directory path for training dataset")
+    parser.add_argument("--test_dataset", required=True, type=str, help="directory path for testing dataset")
     args = parser.parse_args()
 
-    train(args.dataset)
+    train(args.train_dataset, args.test_dataset)
 
 
 if __name__ == "__main__":
