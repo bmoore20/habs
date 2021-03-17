@@ -4,9 +4,12 @@ import torch.nn.functional as F
 
 class HABsModelCNN(nn.Module):
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
+    # TODO - specify typing for parameters and returns of all methods
+    # TODO - doc strings
     # TODO - meaning of parameters
     # TODO - add in 3rd conv and pool to match Keras model
     # TODO - torch.nn vs. torch.nn.functional
+    # TODO - figure out if HABsModel can handle torch.FloatTensor as input (or need PIL image?)
 
     def __init__(self):
         super(HABsModelCNN, self).__init__()

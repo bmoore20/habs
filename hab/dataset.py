@@ -7,8 +7,9 @@ from pathlib import Path
 class HABsDataset(Dataset):
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://towardsdatascience.com/building-efficient-custom-datasets-in-pytorch-2563b946fd9f
-    # TODO - torchvision's transforms
     # TODO - specify typing for parameters and returns of all methods
+    # TODO - doc strings
+    # TODO - "train" and "test" modes have same implementation -> re-evaluate design decision to have separate calls
 
     def __init__(self, data_dir: str, mode: str = "train", transform=None):
         self.data_dir = data_dir
@@ -57,11 +58,6 @@ class HABsDataset(Dataset):
             raise ValueError("Cannot encode target value. Class name must be bga, clear, or turbid.")
 
         return target
-
-    # TODO - pull out transform into Transform class
-    # def _transform(self, image: Image) -> Image:
-    #     image = np.array(image.resize((32, 32))) / 255.0
-    #     return image
 
     def __getitem__(self, idx):
         if self.mode in {"train", "test"}:
