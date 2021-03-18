@@ -12,7 +12,6 @@ from hab.transformations import Rescale, Crop
 
 # TODO - specify typing for parameters and returns of all methods
 # TODO - doc strings
-# TODO - add transforms as parameters to HABsDataset initialization
 # TODO - logger
 # TODO - check order that individual transforms are executed in transforms.Compose (right to left, 1st then 2nd)
 # TODO - figure out if HABsModel can handle torch.FloatTensor as input (or need PIL image?)
