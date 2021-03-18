@@ -7,7 +7,7 @@ import torch.optim as optim
 
 from hab.dataset import HABsDataset
 from hab.model.model import HABsModelCNN
-from hab.transformations import Rescale
+from hab.transformations import Rescale, Crop
 
 
 # TODO - specify typing for parameters and returns of all methods
@@ -28,6 +28,7 @@ def train(train_data_dir: str, test_data_dir: str):
     # ToTensor converts a PIL Image (H x W x C) in the range [0, 255] to a
     # torch.FloatTensor of shape (C x H x W) in the range [0.0, 1.0]
     data_transform = transforms.Compose([
+        Crop(),
         Rescale((32, 32)),
         transforms.ToTensor()
     ])

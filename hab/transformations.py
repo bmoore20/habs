@@ -19,6 +19,25 @@ class Rescale(object):
         return image
 
 
+class Crop(object):
+
+    def __init__(self):
+        ...
+
+    def __call__(self, sample: Image):
+        width, height = sample.size
+
+        left = 0
+        upper = 0
+        right = width
+        lower = height - (height * 0.05)
+
+        image = sample.crop((left, upper, right, lower))
+
+        return image
+
+
+
 
 
 
