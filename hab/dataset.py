@@ -18,7 +18,7 @@ class HABsDataset(Dataset):
         if mode in {"train", "test", "classify"}:
             self.mode = mode
         else:
-            raise ValueError("Dataset mode must be either train, test, or classify. Value received: {}".format(mode))
+            raise ValueError(f"Dataset mode must be either train, test, or classify. Value received: {mode}")
 
     def __len__(self):
         return len(self.image_paths)
@@ -55,7 +55,7 @@ class HABsDataset(Dataset):
         elif _class == "turbid":
             target = 2
         else:
-            raise ValueError("Cannot encode target value. Class name must be bga, clear, or turbid.")
+            raise ValueError(f"Cannot encode target. Class must be bga, clear, or turbid. Value received: {_class}")
 
         return target
 
