@@ -13,6 +13,8 @@ from hab.transformations import Rescale, Crop
 
 # TODO - specify typing for parameters and returns of all methods
 # TODO - doc strings
+# TODO - running_loss warning -> initiate before training loop (running_loss = 0)?
+# TODO - sum() warning -> Unresolved attribute reference 'sum' for class 'bool'
 # TODO - decide if i should set a default value for logger file dir
 # TODO - check order that individual transforms are executed in transforms.Compose (right to left, 1st then 2nd)
 # TODO - figure out if HABsModel can handle torch.FloatTensor as input (or need PIL image?)
@@ -53,6 +55,9 @@ def train(train_data_dir: str, test_data_dir: str, logger_file_dir: str):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(lr=1e-3)
 
+    # instantiate HABs CNN
+    habs_net = HABsModelCNN()
+
     logger.info("Training model.")
 
     # train
@@ -62,8 +67,7 @@ def train(train_data_dir: str, test_data_dir: str, logger_file_dir: str):
 
             optimizer.zero_grad()
 
-            # QUESTION: Why are we passing in argument to model if it wasn't specified in __init__?
-            outputs = HABsModelCNN(images)
+            outputs = habs_net(images)  # nn.module __call__()
             loss = criterion(outputs, targets)
             loss.backward()
             optimizer.step()
@@ -83,8 +87,7 @@ def train(train_data_dir: str, test_data_dir: str, logger_file_dir: str):
         for data in test_loader:
             images, targets = data
 
-            # QUESTION: Why are we passing in argument to model if it wasn't specified in __init__?
-            outputs = HABsModelCNN(images)
+            outputs = habs_net(images)  # nn.module __call__()
             _, predicted = torch.max(outputs.data, 1)
             total += targets.size(0)
             correct += (predicted == targets).sum().item()
