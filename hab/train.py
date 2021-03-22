@@ -17,7 +17,6 @@ from hab.transformations import Rescale, Crop
 # TODO - sum() warning -> Unresolved attribute reference 'sum' for class 'bool'
 # TODO - decide if i should set a default value for logger file dir
 # TODO - check order that individual transforms are executed in transforms.Compose (right to left, 1st then 2nd)
-# TODO - figure out if HABsModel can handle torch.FloatTensor as input (or need PIL image?)
 # TODO - check to see if pytorch weight_decay parameter is same as keras decay parameter
 # optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
 

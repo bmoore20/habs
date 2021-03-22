@@ -9,7 +9,6 @@ class HABsModelCNN(nn.Module):
     # TODO - meaning of parameters
     # TODO - add in 3rd conv and pool to match Keras model
     # TODO - torch.nn vs. torch.nn.functional
-    # TODO - figure out if HABsModel can handle torch.FloatTensor as input (or need PIL image?)
 
     def __init__(self):
         super(HABsModelCNN, self).__init__()
