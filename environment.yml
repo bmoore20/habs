@@ -1,0 +1,12 @@
+name: habs-env
+
+dependencies:
+  - python=3.7
+  - pip
+  - numpy
+  - pillow
+  - scikit-learn
+  - tensorflow
+  - keras
+  - pip:
+      - -r file:requirements.txt
