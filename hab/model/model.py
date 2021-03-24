@@ -4,6 +4,7 @@ import torch.nn.functional as F
 
 class HABsModelCNN(nn.Module):
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
+
     # TODO - specify typing for parameters and returns of all methods
     # TODO - doc strings
     # TODO - meaning of parameters

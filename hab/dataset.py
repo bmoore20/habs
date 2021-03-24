@@ -7,6 +7,7 @@ from pathlib import Path
 class HABsDataset(Dataset):
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://towardsdatascience.com/building-efficient-custom-datasets-in-pytorch-2563b946fd9f
+
     # TODO - specify typing for parameters and returns of all methods
     # TODO - doc strings
     # TODO - "train" and "test" modes have same implementation -> re-evaluate design decision to have separate calls

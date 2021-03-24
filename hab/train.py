@@ -4,35 +4,38 @@ from torchvision import transforms
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from pathlib import Path
 import logging
 
 from hab.dataset import HABsDataset
 from hab.model.model import HABsModelCNN
 from hab.transformations import Rescale, Crop
 
+# ------------ logging ------------
+LOGFILE = "./log.log"
+Path(LOGFILE).parent.mkdir(parents=True, exist_ok=True)
+logger = logging.getLogger(__name__)
+console_handler = logging.StreamHandler()
+file_handler = logging.FileHandler(LOGFILE)
+console_handler.setLevel(logging.INFO)
+file_handler.setLevel(logging.INFO)
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+# ---------------------------------
 
-# TODO - specify typing for parameters and returns of all methods
-# TODO - doc strings
-# TODO - running_loss warning -> initiate before training loop (running_loss = 0)?
-# TODO - sum() warning -> Unresolved attribute reference 'sum' for class 'bool'
-# TODO - decide if i should set a default value for logger file dir
-# TODO - check order that individual transforms are executed in transforms.Compose (right to left, 1st then 2nd)
-# TODO - check to see if pytorch weight_decay parameter is same as keras decay parameter
-# optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
 
-
-def train(train_data_dir: str, test_data_dir: str, logger_file_dir: str):
+def train(train_data_dir: str, test_data_dir: str):
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://realpython.com/python-logging/
 
-    logger = logging.getLogger(__name__)
-    console_handler = logging.StreamHandler()
-    file_handler = logging.FileHandler(logger_file_dir)
-    console_handler.setLevel(logging.INFO)
-    file_handler.setLevel(logging.WARNING)
-    logger.addHandler(console_handler)
-    logger.addHandler(file_handler)
+    # TODO - specify typing for parameters and returns of all methods
+    # TODO - doc strings
+    # TODO - running_loss warning -> initiate before training loop (running_loss = 0)?
+    # TODO - sum() warning -> Unresolved attribute reference 'sum' for class 'bool'
+    # TODO - check order that individual transforms are executed in transforms.Compose (right to left, 1st then 2nd)
+    # TODO - check to see if pytorch weight_decay parameter is same as keras decay parameter
+    # optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
 
     logger.info("Loading data.")
 
@@ -99,10 +102,9 @@ def main():
     parser = ArgumentParser()
     parser.add_argument("--train_dataset", required=True, type=str, help="directory path for training dataset")
     parser.add_argument("--test_dataset", required=True, type=str, help="directory path for testing dataset")
-    parser.add_argument("--logger_file", required=True, type=str, help="directory path for logger file")
     args = parser.parse_args()
 
-    train(args.train_dataset, args.test_dataset, args.logger_file)
+    train(args.train_dataset, args.test_dataset)
 
 
 if __name__ == "__main__":
