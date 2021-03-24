@@ -95,7 +95,7 @@ def train(train_data_dir: str, test_data_dir: str):
             total += targets.size(0)
             correct += (predicted == targets).sum().item()
 
-    print('Accuracy of the network on the 10000 test images: %d %%' % (
+    logger.info('Accuracy of the network on the 10000 test images: %d %%' % (
             100 * correct / total))
 
 
