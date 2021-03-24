@@ -15,21 +15,25 @@ class HABsDataset(Dataset):
     def __init__(self, data_dir: str, mode: str = "train", transform=None):
         self.data_dir = data_dir
         self.transform = transform
+        self._set_mode(mode)
         self.image_paths = self._get_image_paths()
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def _set_mode(self, mode: str):
         if mode in {"train", "test", "classify"}:
             self.mode = mode
         else:
             raise ValueError(f"Dataset mode must be either train, test, or classify. Value received: {mode}")
-
-    def __len__(self):
-        return len(self.image_paths)
 
     def _get_image_paths(self):
         all_paths = Path(self.data_dir).glob("**/*")
 
         if self.mode in {"train", "test"}:
             # Only select image files that are in specified class directories
-            image_paths = [fp for fp in all_paths if fp.suffix == ".jpg" and fp.parent.name in {"bga", "clear", "turbid"}]
+            image_paths = [fp for fp in all_paths if
+                           fp.suffix == ".jpg" and fp.parent.name in {"bga", "clear", "turbid"}]
         else:
             # Images for classify do not have to be sorted into specific class directories
             image_paths = [fp for fp in all_paths if fp.suffix == ".jpg"]
@@ -47,16 +51,16 @@ class HABsDataset(Dataset):
 
     def _make_target(self, idx):
         image_path = self.image_paths[idx]
-        _class = image_path.parent.name
+        class_type = image_path.parent.name
 
-        if _class == "bga":
+        if class_type == "bga":
             target = 0
-        elif _class == "clear":
+        elif class_type == "clear":
             target = 1
-        elif _class == "turbid":
+        elif class_type == "turbid":
             target = 2
         else:
-            raise ValueError(f"Cannot encode target. Class must be bga, clear, or turbid. Value received: {_class}")
+            raise ValueError(f"Cannot encode target. Class must be bga, clear, or turbid. Value received: {class_type}")
 
         return target
 
