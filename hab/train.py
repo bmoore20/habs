@@ -58,7 +58,7 @@ def train(train_data_dir: str, test_data_dir: str):
     optimizer = optim.Adam(lr=1e-3)
 
     # instantiate HABs CNN
-    habs_net = HABsModelCNN()
+    habs_model = HABsModelCNN()
 
     logger.info("Training model.")
 
@@ -69,7 +69,7 @@ def train(train_data_dir: str, test_data_dir: str):
 
             optimizer.zero_grad()
 
-            outputs = habs_net(images)  # nn.module __call__()
+            outputs = habs_model(images)  # nn.module __call__()
             loss = criterion(outputs, targets)
             loss.backward()
             optimizer.step()
@@ -85,11 +85,12 @@ def train(train_data_dir: str, test_data_dir: str):
     # test
     correct = 0
     total = 0
+    habs_model.eval()
     with torch.no_grad():
         for data in test_loader:
             images, targets = data
 
-            outputs = habs_net(images)  # nn.module __call__()
+            outputs = habs_model(images)  # nn.module __call__()
             _, predicted = torch.max(outputs.data, 1)
             total += targets.size(0)
             correct += (predicted == targets).sum().item()
