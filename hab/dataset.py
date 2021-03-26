@@ -1,7 +1,7 @@
 from torch.utils.data import Dataset
 from torchvision import transforms
 from PIL import Image
-from typing import Optional, Union, Tuple
+from typing import Optional, List, Union, Tuple
 from pathlib import Path
 
 
@@ -49,8 +49,7 @@ class HABsDataset(Dataset):
         else:
             raise ValueError(f"Dataset mode must be either train, test, or classify. Value received: {mode}")
 
-    def _get_image_paths(self):
-        # TODO - figure out how to specify output for list of strings [str]
+    def _get_image_paths(self) -> List[Path]:
         """
         Retrieve image paths for each image in the dataset.
 
