@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader
 from torchvision import transforms
 import torch
 import torch.nn as nn
