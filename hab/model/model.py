@@ -27,7 +27,6 @@ class HABsModelCNN(nn.Module):
         self.fc3 = nn.Linear(84, 10)
 
     def forward(self, x: Tensor) -> Tensor:
-        # TODO - determine type for
         """
         Map input tensor to output tensor.
 
