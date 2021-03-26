@@ -83,12 +83,12 @@ class HABsDataset(Dataset):
 
         return image
 
-    def _make_target(self, idx: int) -> str:
+    def _make_target(self, idx: int) -> int:
         """
-        Create target values for image.
+        Create numeric target values for image.
 
         :param idx: Index of where image is in list.
-        :return: Label for specified image. Value needs to be "bga", "clear", or "turbid".
+        :return: Encoded label for specified image. Value needs to be 0 (bga), 1 (clear), or 2 (turbid).
         :raises: ValueError
         """
         image_path = self.image_paths[idx]
