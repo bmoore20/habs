@@ -5,10 +5,6 @@ from typing import Optional, Union, Tuple
 from pathlib import Path
 
 
-# TODO - specify typing for parameters and returns of all methods
-# TODO - doc strings
-# TODO - "train" and "test" modes have same implementation -> re-evaluate design decision to have separate calls
-
 class HABsDataset(Dataset):
     """
     Dataset of images from the Finger Lakes.
@@ -43,7 +39,7 @@ class HABsDataset(Dataset):
 
     def _set_mode(self, mode: str):
         """
-        Set the behavior for the dataset.
+        Set behavior for the dataset.
 
         :param mode: Dataset mode. Value needs to be "train", "test", or "classify".
         :raises: ValueError
@@ -56,7 +52,7 @@ class HABsDataset(Dataset):
     def _get_image_paths(self):
         # TODO - figure out how to specify output for list of strings [str]
         """
-        Retrieve the image paths for each image in the dataset.
+        Retrieve image paths for each image in the dataset.
 
         :return: List containing all of the image paths.
         """
