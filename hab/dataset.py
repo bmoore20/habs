@@ -104,7 +104,7 @@ class HABsDataset(Dataset):
 
         return target
 
-    def __getitem__(self, idx: int) -> Union[Tuple[Image, str], Image]:
+    def __getitem__(self, idx: int) -> Union[Tuple[Image, int], Image]:
         """
         Retrieve a specific image from the dataset.
 
