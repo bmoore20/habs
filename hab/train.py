@@ -13,16 +13,18 @@ from hab.transformations import Rescale, Crop
 from hab.utils import habs_logging
 
 # ------------ logging ------------
+# TODO - figure out why pycharm doesn't like handlers parameter
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s HABs:%(levelname)s - %(name)s",
     handlers=[habs_logging.ch, habs_logging.fh]
 )
 
+# QUESTION: What does captureWarnings do? Is it necessary?
+# logging.captureWarnings(True)
+
 logger = logging.getLogger(__name__)
-
 # ---------------------------------
-
 
 
 def train(train_data_dir: str, test_data_dir: str):
