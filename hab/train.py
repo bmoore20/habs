@@ -4,23 +4,24 @@ from torchvision import transforms
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from pathlib import Path
 import logging
 
 from hab.dataset import HABsDataset
 from hab.model.model import HABsModelCNN
 from hab.transformations import Rescale, Crop
+from hab.utils import habs_logging
 
 # ------------ logging ------------
-LOGFILE = "./log.log"
-Path(LOGFILE).parent.mkdir(parents=True, exist_ok=True)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s HABs:%(levelname)s - %(name)s"
+)
+
+logging.captureWarnings(True)
+
 logger = logging.getLogger(__name__)
-console_handler = logging.StreamHandler()
-file_handler = logging.FileHandler(LOGFILE)
-console_handler.setLevel(logging.INFO)
-file_handler.setLevel(logging.INFO)
-logger.addHandler(console_handler)
-logger.addHandler(file_handler)
+logger.addHandler(habs_logging.ch)
+logger.addHandler(habs_logging.fh)
 # ---------------------------------
 
 # TODO - running_loss warning -> initiate before training loop (running_loss = 0)?
