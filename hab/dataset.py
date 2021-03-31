@@ -1,33 +1,60 @@
 from torch.utils.data import Dataset
+from torchvision import transforms
 from PIL import Image
-from typing import Tuple, Optional
+from typing import Optional, List, Union, Tuple
 from pathlib import Path
 
 
 class HABsDataset(Dataset):
+    """
+    Dataset of images from the Finger Lakes.
+    Each image can be classified as either bga (blue-green algae), clear, or turbid.
+
+    Currently the dataset supports JPG images that are 1280 x 736 px.
+    """
+
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://towardsdatascience.com/building-efficient-custom-datasets-in-pytorch-2563b946fd9f
 
-    # TODO - specify typing for parameters and returns of all methods
-    # TODO - doc strings
-    # TODO - "train" and "test" modes have same implementation -> re-evaluate design decision to have separate calls
+    def __init__(self, data_dir: str, mode: str = "train", transform: Optional[transforms.Compose] = None):
+        """
+        Construct instance of a HABsDataset object.
 
-    def __init__(self, data_dir: str, mode: str = "train", transform=None):
+        :param data_dir: Directory path that contains the dataset's images.
+        :param mode: Mode of the dataset. Value needs to be "train", "test", or "classify".
+        :param transform: Transforms to apply to dataset images. Value is None (default) or torchvision transform.
+        """
         self.data_dir = data_dir
         self.transform = transform
         self._set_mode(mode)
         self.image_paths = self._get_image_paths()
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """
+        Length of HABsDataset.
+
+        :return: Number of images in dataset.
+        """
         return len(self.image_paths)
 
     def _set_mode(self, mode: str):
+        """
+        Set behavior for the dataset.
+
+        :param mode: Dataset mode. Value needs to be "train", "test", or "classify".
+        :raises: ValueError
+        """
         if mode in {"train", "test", "classify"}:
             self.mode = mode
         else:
             raise ValueError(f"Dataset mode must be either train, test, or classify. Value received: {mode}")
 
-    def _get_image_paths(self):
+    def _get_image_paths(self) -> List[Path]:
+        """
+        Retrieve image paths for each image in the dataset.
+
+        :return: List containing all of the image paths.
+        """
         all_paths = Path(self.data_dir).glob("**/*")
 
         if self.mode in {"train", "test"}:
@@ -40,7 +67,13 @@ class HABsDataset(Dataset):
 
         return image_paths
 
-    def _get_image(self, idx):
+    def _get_image(self, idx: int) -> Image:
+        """
+        Retrieve image at the specified index from list containing all of the image paths.
+
+        :param idx: Index of where image is in list.
+        :return: Image at specified location.
+        """
         image_path = self.image_paths[idx]
         image = Image.open(image_path)
 
@@ -49,7 +82,14 @@ class HABsDataset(Dataset):
 
         return image
 
-    def _make_target(self, idx):
+    def _make_target(self, idx: int) -> int:
+        """
+        Create numeric target values for image.
+
+        :param idx: Index of where image is in list.
+        :return: Encoded label for specified image. Value needs to be 0 (bga), 1 (clear), or 2 (turbid).
+        :raises: ValueError
+        """
         image_path = self.image_paths[idx]
         class_type = image_path.parent.name
 
@@ -64,7 +104,13 @@ class HABsDataset(Dataset):
 
         return target
 
-    def __getitem__(self, idx):
+    def __getitem__(self, idx: int) -> Union[Tuple[Image, int], Image]:
+        """
+        Retrieve a specific image from the dataset.
+
+        :param idx: Index of where image is in list.
+        :return: Image and target value if dataset mode is "train" or "test". Only Image if dataset mode is "classify".
+        """
         if self.mode in {"train", "test"}:
             image = self._get_image(idx)
             target = self._make_target(idx)

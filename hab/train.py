@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader
 from torchvision import transforms
 import torch
 import torch.nn as nn
@@ -23,19 +23,24 @@ logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 # ---------------------------------
 
+# TODO - running_loss warning -> initiate before training loop (running_loss = 0)?
+# TODO - sum() warning -> Unresolved attribute reference 'sum' for class 'bool'
+# TODO - check order that individual transforms are executed in transforms.Compose (right to left, 1st then 2nd)
+# TODO - check to see if pytorch weight_decay parameter is same as keras decay parameter
+# optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
+
 
 def train(train_data_dir: str, test_data_dir: str):
+    """
+    Complete training and evaluation for HABsModelCNN.
+
+    :param train_data_dir: Directory path for training dataset.
+    :param test_data_dir: Directory path for testing dataset.
+    """
+
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://realpython.com/python-logging/
-
-    # TODO - specify typing for parameters and returns of all methods
-    # TODO - doc strings
-    # TODO - running_loss warning -> initiate before training loop (running_loss = 0)?
-    # TODO - sum() warning -> Unresolved attribute reference 'sum' for class 'bool'
-    # TODO - check order that individual transforms are executed in transforms.Compose (right to left, 1st then 2nd)
-    # TODO - check to see if pytorch weight_decay parameter is same as keras decay parameter
-    # optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
 
     logger.info("Loading data.")
 
@@ -100,6 +105,9 @@ def train(train_data_dir: str, test_data_dir: str):
 
 
 def main():
+    """
+    Carry out full HABs program functionality.
+    """
     parser = ArgumentParser()
     parser.add_argument("--train_dataset", required=True, type=str, help="directory path for training dataset")
     parser.add_argument("--test_dataset", required=True, type=str, help="directory path for testing dataset")

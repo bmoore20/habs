@@ -1,17 +1,23 @@
 import torch.nn as nn
 import torch.nn.functional as F
+from torch import Tensor
+
+# TODO - meaning of parameters for CNN methods
+# TODO - add in 3rd conv and pool to match Keras model
+# TODO - torch.nn vs. torch.nn.functional
 
 
 class HABsModelCNN(nn.Module):
+    """
+    Convolutional Neural Network for detecting Harmful Algal Blooms.
+    """
+
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
 
-    # TODO - specify typing for parameters and returns of all methods
-    # TODO - doc strings
-    # TODO - meaning of parameters
-    # TODO - add in 3rd conv and pool to match Keras model
-    # TODO - torch.nn vs. torch.nn.functional
-
     def __init__(self):
+        """
+        Construct instance of a HABsModelCNN object.
+        """
         super(HABsModelCNN, self).__init__()
         self.conv1 = nn.Conv2d(3, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
@@ -20,7 +26,13 @@ class HABsModelCNN(nn.Module):
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
 
-    def forward(self, x):
+    def forward(self, x: Tensor) -> Tensor:
+        """
+        Map input tensor to output tensor.
+
+        :param x: Input tensor.
+        :return: Tensor received after network transformation.
+        """
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = x.view(-1, 16 * 5 * 5)
