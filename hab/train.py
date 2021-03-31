@@ -1,10 +1,9 @@
 from argparse import ArgumentParser
-from torch.utils.data import DataLoader, random_split
+from torch.utils.data import DataLoader
 from torchvision import transforms
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from pathlib import Path
 import logging
 
 from hab.dataset import HABsDataset
@@ -13,17 +12,16 @@ from hab.transformations import Rescale, Crop
 from hab.utils import habs_logging
 
 # ------------ logging ------------
-# TODO - figure out why pycharm doesn't like handlers parameter
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s HABs:%(levelname)s - %(name)s",
-    handlers=[habs_logging.ch, habs_logging.fh]
+    format="%(asctime)s HABs:%(levelname)s - %(name)s"
 )
 
-# QUESTION: What does captureWarnings do? Is it necessary?
-# logging.captureWarnings(True)
+logging.captureWarnings(True)
 
 logger = logging.getLogger(__name__)
+logger.addHandler(habs_logging.ch)
+logger.addHandler(habs_logging.fh)
 # ---------------------------------
 
 
