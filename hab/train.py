@@ -63,6 +63,8 @@ def train(train_data_dir: str, test_data_dir: str):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(lr=1e-3)
 
+    logger.info("Initial Seed: %d" % (torch.initial_seed()))
+
     # instantiate HABs CNN
     habs_model = HABsModelCNN()
 
@@ -82,8 +84,8 @@ def train(train_data_dir: str, test_data_dir: str):
 
             running_loss += loss.item()
             if i % 2000 == 1999:  # print every 2000 mini-batches
-                print('[%d, %5d] loss: %.3f' %
-                      (epoch + 1, i + 1, running_loss / 2000))
+                logger.info("[%d, %5d] loss: %.3f" %
+                            (epoch + 1, i + 1, running_loss / 2000))
                 running_loss = 0.0
 
     logger.info("Testing model.")
@@ -101,7 +103,7 @@ def train(train_data_dir: str, test_data_dir: str):
             total += targets.size(0)
             correct += (predicted == targets).sum().item()
 
-    logger.info('Accuracy of the network on the 10000 test images: %d %%' % (
+    logger.info("Accuracy of the network on the 10000 test images: %d %%" % (
             100 * correct / total))
 
 
