@@ -1,10 +1,10 @@
-from torch.utils.data import DataLoader
-from torchvision import transforms
+import logging
+import typer
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import logging
-import typer
+from torch.utils.data import DataLoader
+from torchvision import transforms
 
 from hab.dataset import HABsDataset
 from hab.model.model import HABsModelCNN
