@@ -1,10 +1,10 @@
-from argparse import ArgumentParser
 from torch.utils.data import DataLoader
 from torchvision import transforms
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import logging
+import typer
 
 from hab.dataset import HABsDataset
 from hab.model.model import HABsModelCNN
@@ -105,17 +105,15 @@ def train(train_data_dir: str, test_data_dir: str):
             100 * correct / total))
 
 
-def main():
+def main(train_dataset: str, test_dataset: str):
     """
     Carry out full HABs program functionality.
-    """
-    parser = ArgumentParser()
-    parser.add_argument("--train_dataset", required=True, type=str, help="directory path for training dataset")
-    parser.add_argument("--test_dataset", required=True, type=str, help="directory path for testing dataset")
-    args = parser.parse_args()
 
-    train(args.train_dataset, args.test_dataset)
+    Pass in directory paths for training and testing datasets.
+    """
+
+    train(train_dataset, test_dataset)
 
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)
