@@ -1,8 +1,9 @@
 from torch.utils.data import Dataset
 from torchvision import transforms
 from PIL import Image
-from typing import Optional, List, Union, Tuple
+from typing import List, Union, Tuple
 from pathlib import Path
+import torch
 
 
 class HABsDataset(Dataset):
@@ -16,18 +17,20 @@ class HABsDataset(Dataset):
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://towardsdatascience.com/building-efficient-custom-datasets-in-pytorch-2563b946fd9f
 
-    def __init__(self, data_dir: str, mode: str = "train", transform: Optional[transforms.Compose] = None):
+    def __init__(self, data_dir: str, transform: transforms.Compose, mode: str = "train", magnitude_increase: int = 1):
         """
         Construct instance of a HABsDataset object.
 
         :param data_dir: Directory path that contains the dataset's images.
+        :param transform: Transforms to apply to dataset images. None not supported.
         :param mode: Mode of the dataset. Value needs to be "train", "test", or "classify".
-        :param transform: Transforms to apply to dataset images. Value is None (default) or torchvision transform.
+        :param magnitude_increase: Amount to multiple original number of samples by.
         """
         self.data_dir = data_dir
+        self.image_paths = self._get_image_paths()
         self.transform = transform
         self._set_mode(mode)
-        self.image_paths = self._get_image_paths()
+        self.magnitude_increase = magnitude_increase
 
     def __len__(self) -> int:
         """
@@ -35,7 +38,7 @@ class HABsDataset(Dataset):
 
         :return: Number of images in dataset.
         """
-        return len(self.image_paths)
+        return self.magnitude_increase * len(self.image_paths)
 
     def _set_mode(self, mode: str):
         """
@@ -67,7 +70,7 @@ class HABsDataset(Dataset):
 
         return image_paths
 
-    def _get_image(self, idx: int) -> Image:
+    def _get_image(self, idx: int) -> torch.Tensor:
         """
         Retrieve image at the specified index from list containing all of the image paths.
 
@@ -77,8 +80,10 @@ class HABsDataset(Dataset):
         image_path = self.image_paths[idx]
         image = Image.open(image_path)
 
-        if self.transform:
+        if self.transform is not None:
             image = self.transform(image)
+        else:
+            raise TypeError("None type is not supported. Torchvision transform object must be given.")
 
         return image
 
@@ -104,7 +109,7 @@ class HABsDataset(Dataset):
 
         return target
 
-    def __getitem__(self, idx: int) -> Union[Tuple[Image, int], Image]:
+    def __getitem__(self, idx: int) -> Union[Tuple[torch.Tensor, int], torch.Tensor]:
         """
         Retrieve a specific image from the dataset.
 

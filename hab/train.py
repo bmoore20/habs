@@ -11,6 +11,7 @@ from hab.model.model import HABsModelCNN
 from hab.transformations import Rescale, Crop
 from hab.utils import habs_logging
 
+
 # ------------ logging ------------
 logging.basicConfig(
     level=logging.INFO,
@@ -31,12 +32,13 @@ logger.addHandler(habs_logging.fh)
 # optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
 
 
-def train(train_data_dir: str, test_data_dir: str):
+def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
     """
     Complete training and evaluation for HABsModelCNN.
 
     :param train_data_dir: Directory path for training dataset.
     :param test_data_dir: Directory path for testing dataset.
+    :param magnitude_increase: Amount to multiple original number of samples by.
     """
 
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
@@ -48,14 +50,16 @@ def train(train_data_dir: str, test_data_dir: str):
     # Replaces [image = np.array(image.resize((32, 32))) / 255.0] from orig program
     # ToTensor converts a PIL Image (H x W x C) in the range [0, 255] to a
     # torch.FloatTensor of shape (C x H x W) in the range [0.0, 1.0]
+    # TODO - experiment with different combinations of transformations
     data_transform = transforms.Compose([
         Crop(),
         Rescale((32, 32)),
-        transforms.ToTensor()
+        transforms.ToTensor(),
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))  # Calculated on ImageNet dataset
     ])
 
-    train_dataset = HABsDataset(train_data_dir, "train", transform=data_transform)
-    test_dataset = HABsDataset(test_data_dir, "test", transform=data_transform)
+    train_dataset = HABsDataset(train_data_dir, data_transform, "train", magnitude_increase)
+    test_dataset = HABsDataset(test_data_dir, data_transform, "test", magnitude_increase)
 
     train_loader = DataLoader(train_dataset)
     test_loader = DataLoader(test_dataset)
@@ -111,8 +115,7 @@ def main(train_dataset: str, test_dataset: str):
 
     Pass in directory paths for training and testing datasets.
     """
-
-    train(train_dataset, test_dataset)
+    train(train_dataset, test_dataset, 100)
 
 
 if __name__ == "__main__":
