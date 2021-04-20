@@ -13,7 +13,6 @@ class HABsDataset(Dataset):
 
     Currently the dataset supports JPG images that are 1280 x 736 px.
     """
-
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://towardsdatascience.com/building-efficient-custom-datasets-in-pytorch-2563b946fd9f
 

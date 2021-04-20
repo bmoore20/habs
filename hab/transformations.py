@@ -6,7 +6,6 @@ class Rescale(object):
     """
     Rescale image to a specified size.
     """
-
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
 
     def __init__(self, output_size: Tuple[int, int]):

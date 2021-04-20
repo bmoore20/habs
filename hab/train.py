@@ -11,7 +11,6 @@ from hab.model.model import HABsModelCNN
 from hab.transformations import Rescale, Crop
 from hab.utils import habs_logging
 
-
 # ------------ logging ------------
 logging.basicConfig(
     level=logging.INFO,
@@ -40,7 +39,6 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
     :param test_data_dir: Directory path for testing dataset.
     :param magnitude_increase: Amount to multiple original number of samples by.
     """
-
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://realpython.com/python-logging/
