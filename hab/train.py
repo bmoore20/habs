@@ -14,7 +14,7 @@ from hab.utils import habs_logging
 # ------------ logging ------------
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s HABs:%(levelname)s - %(name)s"
+    format="%(asctime)s HABs:%(levelname)s - %(name)s - %(message)s"
 )
 
 logging.captureWarnings(True)
