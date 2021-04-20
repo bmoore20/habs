@@ -11,7 +11,6 @@ from hab.model.model import HABsModelCNN
 from hab.transformations import Rescale, Crop
 from hab.utils import habs_logging
 
-
 # ------------ logging ------------
 logging.basicConfig(
     level=logging.INFO,
@@ -23,6 +22,8 @@ logging.captureWarnings(True)
 logger = logging.getLogger(__name__)
 logger.addHandler(habs_logging.ch)
 logger.addHandler(habs_logging.fh)
+
+
 # ---------------------------------
 
 # TODO - running_loss warning -> initiate before training loop (running_loss = 0)?
@@ -30,7 +31,6 @@ logger.addHandler(habs_logging.fh)
 # TODO - check order that individual transforms are executed in transforms.Compose (right to left, 1st then 2nd)
 # TODO - check to see if pytorch weight_decay parameter is same as keras decay parameter
 # optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
-
 
 def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
     """
@@ -40,7 +40,6 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
     :param test_data_dir: Directory path for testing dataset.
     :param magnitude_increase: Amount to multiple original number of samples by.
     """
-
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://realpython.com/python-logging/

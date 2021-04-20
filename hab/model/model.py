@@ -11,7 +11,6 @@ class HABsModelCNN(nn.Module):
     """
     Convolutional Neural Network for detecting Harmful Algal Blooms.
     """
-
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
 
     def __init__(self):
