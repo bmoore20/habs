@@ -2,7 +2,8 @@ import logging
 import typer
 import torch
 import torch.nn as nn
-import torch.optim as optim
+from torch.nn import Module
+from torch.optim import Optimizer
 from torch.utils.data import DataLoader
 from torchvision import transforms
 
@@ -10,6 +11,7 @@ from hab.dataset import HABsDataset
 from hab.model.model import HABsModelCNN
 from hab.transformations import Rescale, Crop
 from hab.utils import habs_logging
+from hab.utils .utils import model_filter, criterion_filter, optimizer_filter
 
 # ------------ logging ------------
 logging.basicConfig(
@@ -27,16 +29,26 @@ logger.addHandler(habs_logging.fh)
 # TODO - running_loss warning -> initiate before training loop (running_loss = 0)?
 # TODO - sum() warning -> Unresolved attribute reference 'sum' for class 'bool'
 # TODO - check order that individual transforms are executed in transforms.Compose (right to left, 1st then 2nd)
-# TODO - check to see if pytorch weight_decay parameter is same as keras decay parameter
-# optimizer = optim.Adam(lr=1e-3, weight_decay=1e-3 / 50)
 
 
-def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
+def train(
+        train_data_dir: str,
+        test_data_dir: str,
+        habs_model: Module,
+        epochs: int,
+        optimizer: Optimizer,
+        criterion: Module,
+        magnitude_increase: int = 1
+):
     """
     Complete training and evaluation for HABsModelCNN.
 
     :param train_data_dir: Directory path for training dataset.
     :param test_data_dir: Directory path for testing dataset.
+    :param habs_model: Model to be trained and evaluated.
+    :param epochs: Number of epochs that training loop will complete.
+    :param optimizer: Optimization algorithm used to train the model.
+    :param criterion: Loss function used to train the model.
     :param magnitude_increase: Amount to multiple original number of samples by.
     """
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
@@ -62,18 +74,17 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
     train_loader = DataLoader(train_dataset)
     test_loader = DataLoader(test_dataset)
 
-    criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(lr=1e-3)
+    # criterion = nn.CrossEntropyLoss()
 
     logger.info("Initial Seed: %d" % (torch.initial_seed()))
 
     # instantiate HABs CNN
-    habs_model = HABsModelCNN()
+    # habs_model = model
 
     logger.info("Training model.")
 
     # train
-    for epoch in range(2):
+    for epoch in range(epochs):
         for i, data in enumerate(train_loader, 0):
             images, targets = data
 
@@ -109,13 +120,25 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
             100 * correct / total))
 
 
-def main(train_dataset: str, test_dataset: str):
+def main(
+        train_dataset: str,
+        test_dataset: str,
+        model_type: str,
+        epochs: int,
+        optimizer_type: str,
+        loss_type: str,
+        magnitude_increase: int
+):
     """
     Carry out full HABs program functionality.
 
-    Pass in directory paths for training and testing datasets.
+    Pass in directory paths for training and testing datasets, model type,
+    number of epochs, optimizer type, loss type and dataset magnitude increase value.
     """
-    train(train_dataset, test_dataset, 100)
+    model = model_filter(model_type)
+    optimizer = optimizer_filter(optimizer_type)
+    criterion = criterion_filter(loss_type)
+    train(train_dataset, test_dataset, model, epochs, optimizer, criterion, magnitude_increase)
 
 
 if __name__ == "__main__":
