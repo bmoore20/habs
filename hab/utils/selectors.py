@@ -6,9 +6,7 @@ from torch.optim import Optimizer
 from hab.model.model import HABsModelCNN
 
 
-# TODO - split functionality of HABs_Classify into helper methods and include in utils
-
-def model_filter(model_type: str) -> Module:
+def model_selector(model_type: str) -> Module:
     """
     Retrieve specified model object.
 
@@ -21,7 +19,7 @@ def model_filter(model_type: str) -> Module:
         raise ValueError(f"Model type must be CNN. Value received: {model_type}")
 
 
-def criterion_filter(loss_type: str) -> Module:
+def criterion_selector(loss_type: str) -> Module:
     """
     Retrieve specified loss object.
 
@@ -34,7 +32,7 @@ def criterion_filter(loss_type: str) -> Module:
         raise ValueError(f"Loss type must be Cross Entropy. Value received: {loss_type}")
 
 
-def optimizer_filter(optim_type: str) -> Optimizer:
+def optimizer_selector(optim_type: str) -> Optimizer:
     """
     Retrieve specified optimizer object.
 
