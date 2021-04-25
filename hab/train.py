@@ -89,6 +89,7 @@ def main(
     Pass in directory paths for training and testing datasets, model type,
     number of epochs, optimizer type, loss type and dataset magnitude increase value.
     """
+    logger.info(f"Model: {model_type} Epochs: {epochs} Optimizer: {optimizer_type} Loss: {loss_type}")
     model = selectors.model_selector(model_type)
     optimizer = selectors.optimizer_selector(optimizer_type)
     criterion = selectors.criterion_selector(loss_type)
