@@ -65,6 +65,9 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(lr=1e-3)
 
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    logger.info(f"Device: {device.type}")
+
     logger.info("Initial Seed: %d" % (torch.initial_seed()))
 
     # instantiate HABs CNN
