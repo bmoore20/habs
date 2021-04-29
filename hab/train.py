@@ -13,8 +13,7 @@ from hab.utils import habs_logging
 
 # ------------ logging ------------
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s HABs:%(levelname)s - %(name)s - %(message)s"
+    level=logging.INFO, format="%(asctime)s HABs:%(levelname)s - %(name)s - %(message)s"
 )
 
 logging.captureWarnings(True)
@@ -49,14 +48,20 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
     # ToTensor converts a PIL Image (H x W x C) in the range [0, 255] to a
     # torch.FloatTensor of shape (C x H x W) in the range [0.0, 1.0]
     # TODO - experiment with different combinations of transformations
-    data_transform = transforms.Compose([
-        Crop(),
-        Rescale((32, 32)),
-        transforms.ToTensor(),
-        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))  # Calculated on ImageNet dataset
-    ])
+    data_transform = transforms.Compose(
+        [
+            Crop(),
+            Rescale((32, 32)),
+            transforms.ToTensor(),
+            transforms.Normalize(
+                (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+            ),  # Calculated on ImageNet dataset
+        ]
+    )
 
-    train_dataset = HABsDataset(train_data_dir, data_transform, "train", magnitude_increase)
+    train_dataset = HABsDataset(
+        train_data_dir, data_transform, "train", magnitude_increase
+    )
     test_dataset = HABsDataset(test_data_dir, data_transform, "test", magnitude_increase)
 
     train_loader = DataLoader(train_dataset)
@@ -76,6 +81,7 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
     logger.info("Training model.")
 
     # train
+    running_loss = 0
     for epoch in range(2):
         for i, data in enumerate(train_loader, 0):
             images, targets = data
@@ -89,8 +95,9 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
 
             running_loss += loss.item()
             if i % 2000 == 1999:  # print every 2000 mini-batches
-                logger.info("[%d, %5d] loss: %.3f" %
-                            (epoch + 1, i + 1, running_loss / 2000))
+                logger.info(
+                    "[%d, %5d] loss: %.3f" % (epoch + 1, i + 1, running_loss / 2000)
+                )
                 running_loss = 0.0
 
     logger.info("Testing model.")
@@ -108,8 +115,10 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
             total += targets.size(0)
             correct += (predicted == targets).sum().item()
 
-    logger.info("Accuracy of the network on the 10000 test images: %d %%" % (
-            100 * correct / total))
+    logger.info(
+        "Accuracy of the network on the 10000 test images: %d %%"
+        % (100 * correct / total)
+    )
 
 
 def main(train_dataset: str, test_dataset: str):
