@@ -62,7 +62,9 @@ def train(train_data_dir: str, test_data_dir: str, magnitude_increase: int = 1):
     train_dataset = HABsDataset(
         train_data_dir, data_transform, "train", magnitude_increase
     )
-    test_dataset = HABsDataset(test_data_dir, data_transform, "test", magnitude_increase)
+    test_dataset = HABsDataset(
+        test_data_dir, data_transform, "test", magnitude_increase
+    )
 
     train_loader = DataLoader(train_dataset)
     test_loader = DataLoader(test_dataset)
