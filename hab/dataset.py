@@ -13,10 +13,17 @@ class HABsDataset(Dataset):
 
     Currently the dataset supports JPG images that are 1280 x 736 px.
     """
+
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://towardsdatascience.com/building-efficient-custom-datasets-in-pytorch-2563b946fd9f
 
-    def __init__(self, data_dir: str, transform: transforms.Compose, mode: str = "train", magnitude_increase: int = 1):
+    def __init__(
+        self,
+        data_dir: str,
+        transform: transforms.Compose,
+        mode: str = "train",
+        magnitude_increase: int = 1,
+    ):
         """
         Construct instance of a HABsDataset object.
 
@@ -49,7 +56,9 @@ class HABsDataset(Dataset):
         if mode in {"train", "test", "classify"}:
             self.mode = mode
         else:
-            raise ValueError(f"Dataset mode must be either train, test, or classify. Value received: {mode}")
+            raise ValueError(
+                f"Dataset mode must be either train, test, or classify. Value received: {mode}"
+            )
 
     def _get_image_paths(self) -> List[Path]:
         """
@@ -61,8 +70,11 @@ class HABsDataset(Dataset):
 
         if self.mode in {"train", "test"}:
             # Only select image files that are in specified class directories
-            image_paths = [fp for fp in all_paths if
-                           fp.suffix == ".jpg" and fp.parent.name in {"bga", "clear", "turbid"}]
+            image_paths = [
+                fp
+                for fp in all_paths
+                if fp.suffix == ".jpg" and fp.parent.name in {"bga", "clear", "turbid"}
+            ]
         else:
             # Images for classify do not have to be sorted into specific class directories
             image_paths = [fp for fp in all_paths if fp.suffix == ".jpg"]
@@ -82,7 +94,9 @@ class HABsDataset(Dataset):
         if self.transform is not None:
             image = self.transform(image)
         else:
-            raise TypeError("None type is not supported. Torchvision transform object must be given.")
+            raise TypeError(
+                "None type is not supported. Torchvision transform object must be given."
+            )
 
         return image
 
@@ -104,7 +118,9 @@ class HABsDataset(Dataset):
         elif class_type == "turbid":
             target = 2
         else:
-            raise ValueError(f"Cannot encode target. Class must be bga, clear, or turbid. Value received: {class_type}")
+            raise ValueError(
+                f"Cannot encode target. Class must be bga, clear, or turbid. Value received: {class_type}"
+            )
 
         return target
 
