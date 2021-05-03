@@ -22,7 +22,7 @@ class HABsDataset(Dataset):
 
         :param data_dir: Directory path that contains the dataset's images.
         :param transform: Transforms to apply to dataset images. None not supported.
-        :param mode: Mode of the dataset. Value needs to be "train", "test", or "classify".
+        :param mode: Mode of the dataset. Value needs to be "train", "validation", "test", or "classify".
         :param magnitude_increase: Amount to multiple original number of samples by.
         """
         self.data_dir = data_dir
@@ -43,13 +43,13 @@ class HABsDataset(Dataset):
         """
         Set behavior for the dataset.
 
-        :param mode: Dataset mode. Value needs to be "train", "test", or "classify".
+        :param mode: Dataset mode. Value needs to be "train", "validation", "test", or "classify".
         :raises: ValueError
         """
-        if mode in {"train", "test", "classify"}:
+        if mode in {"train", "validation", "test", "classify"}:
             self.mode = mode
         else:
-            raise ValueError(f"Dataset mode must be either train, test, or classify. Value received: {mode}")
+            raise ValueError(f"Dataset mode must be either train, validation, test, or classify. Value received: {mode}")
 
     def _get_image_paths(self) -> List[Path]:
         """
@@ -59,7 +59,7 @@ class HABsDataset(Dataset):
         """
         all_paths = Path(self.data_dir).glob("**/*")
 
-        if self.mode in {"train", "test"}:
+        if self.mode in {"train", "validation", "test"}:
             # Only select image files that are in specified class directories
             image_paths = [fp for fp in all_paths if
                            fp.suffix == ".jpg" and fp.parent.name in {"bga", "clear", "turbid"}]
@@ -113,13 +113,15 @@ class HABsDataset(Dataset):
         Retrieve a specific image from the dataset.
 
         :param idx: Index of where image is in list.
-        :return: Image and target value if dataset mode is "train" or "test". Only Image if dataset mode is "classify".
+        :return: Image and target value if dataset mode is "train", "validation", or "test". Only Image if dataset mode is "classify".
         """
-        if self.mode in {"train", "test"}:
+        if self.mode in {"train", "validation", "test"}:
+            idx = idx % len(self.image_paths) # account for magnitude increase
             image = self._get_image(idx)
             target = self._make_target(idx)
             return image, target
         else:
             # Images to be classified do not have known target values
+            idx = idx % len(self.image_paths) # account for magnitude increase
             image = self._get_image(idx)
             return image
