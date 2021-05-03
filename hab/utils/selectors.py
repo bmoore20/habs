@@ -1,12 +1,9 @@
-import torch.nn as nn
-import torch.optim as optim
-from torch.nn import Module
-from torch.optim import Optimizer
+import torch
 
 from hab.model.model import HABsModelCNN
 
 
-def model_selector(model_type: str) -> Module:
+def model_selector(model_type: str) -> torch.nn.Module:
     """
     Retrieve specified model object.
 
@@ -19,7 +16,7 @@ def model_selector(model_type: str) -> Module:
         raise ValueError(f"Model type must be CNN. Value received: {model_type}")
 
 
-def criterion_selector(loss_type: str) -> Module:
+def criterion_selector(loss_type: str) -> torch.nn.Module:
     """
     Retrieve specified loss object.
 
@@ -27,19 +24,23 @@ def criterion_selector(loss_type: str) -> Module:
     :return: Instance of Loss object.
     """
     if loss_type == "Cross Entropy":
-        return nn.CrossEntropyLoss()
+        return torch.nn.CrossEntropyLoss()
     else:
         raise ValueError(f"Loss type must be Cross Entropy. Value received: {loss_type}")
 
 
-def optimizer_selector(optim_type: str) -> Optimizer:
+def optimizer_selector(optim_type: str, learn_rate: float = None) -> torch.optim.Optimizer:
     """
     Retrieve specified optimizer object.
 
     :param optim_type: Name of desired optimizer.
+    :param learn_rate: Learning rate. If None, torch default value is used. 
     :return: Instance of Optimizer object.
     """
     if optim_type == "Adam":
-        return optim.Adam(lr=1e-3)
+        if learn_rate is not None:
+            return torch.optim.Adam(learn_rate)
+        else:
+            return torch.optim.Adam() # default learn rate: 1e-3
     else:
         raise ValueError(f"Optimizer type must be Adam. Value received: {optim_type}")
