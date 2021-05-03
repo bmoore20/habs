@@ -1,4 +1,5 @@
 import torch
+from typing import Optional 
 
 from hab.model.model import HABsModelCNN
 
@@ -29,7 +30,7 @@ def criterion_selector(loss_type: str) -> torch.nn.Module:
         raise ValueError(f"Loss type must be Cross Entropy. Value received: {loss_type}")
 
 
-def optimizer_selector(optim_type: str, learn_rate: float = None) -> torch.optim.Optimizer:
+def optimizer_selector(optim_type: str, learn_rate: Optional[float] = None) -> torch.optim.Optimizer:
     """
     Retrieve specified optimizer object.
 
