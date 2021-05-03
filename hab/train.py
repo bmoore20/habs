@@ -79,22 +79,23 @@ def main(
         test_dataset: str,
         model_type: str,
         epochs: int,
-        optimizer_type: str,
         loss_type: str,
-        magnitude_increase: int
+        optimizer_type: str,
+        learn_rate: float,
+        magnitude_increase: int = typer.Argument(1)
 ):
     """
     Carry out full HABs program functionality.
 
-    Pass in directory paths for training and testing datasets, model type,
-    number of epochs, optimizer type, loss type and dataset magnitude increase value.
+    Pass in directory paths for training and testing datasets, model type, number of epochs,
+    loss type, optimizer type, learning rate and dataset magnitude increase value.
     """
     logger.info(
-        f"Model: {model_type} Epochs: {epochs} Optimizer: {optimizer_type} Loss: {loss_type} Mag Inc: {magnitude_increase}"
+        f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} Optimizer: {optimizer_type} Learn Rate: {learn_rate} Mag Inc: {magnitude_increase}"
     )
     model = selectors.model_selector(model_type)
-    optimizer = selectors.optimizer_selector(optimizer_type)
     criterion = selectors.criterion_selector(loss_type)
+    optimizer = selectors.optimizer_selector(optimizer_type, learn_rate)
     train(train_dataset, test_dataset, model, epochs, optimizer, criterion, magnitude_increase)
 
 
