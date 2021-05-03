@@ -40,8 +40,8 @@ def optimizer_selector(optim_type: str, learn_rate: Optional[float] = None) -> t
     """
     if optim_type == "Adam":
         if learn_rate is not None:
-            return torch.optim.Adam(learn_rate)
+            return torch.optim.Adam(lr=learn_rate)
         else:
-            return torch.optim.Adam() # default learn rate: 1e-3
+            return torch.optim.Adam(lr=1e-3)
     else:
         raise ValueError(f"Optimizer type must be Adam. Value received: {optim_type}")
