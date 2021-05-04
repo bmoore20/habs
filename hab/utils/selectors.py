@@ -45,3 +45,4 @@ def optimizer_selector(optim_type: str, learn_rate: Optional[float] = None) -> t
             return torch.optim.Adam(lr=1e-3)
     else:
         raise ValueError(f"Optimizer type must be Adam. Value received: {optim_type}")
+        
