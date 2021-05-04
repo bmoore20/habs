@@ -20,40 +20,50 @@ logger.addHandler(habs_logging.fh)
 # ---------------------------------
 
 
-def training_laps(
-        model: Module,
-        data_loader: DataLoader,
-        epochs: int,
-        optimizer: Optimizer,
-        criterion: Module
-):
+def training_lap(model: Module, data_loader: DataLoader, optimizer: Optimizer, criterion: Module) -> float:
     """
-    Execute training on model by completing specified number of epochs/laps through database.
+    Execute a training lap on the model.
 
-    :param model:Model to be trained.
+    :param model: Model to be trained.
     :param data_loader: Data loader that contains training data.
-    :param epochs: Number of laps to complete through dataset.
     :param optimizer: Optimization algorithm used to train the model.
     :param criterion: Loss function used to train the model.
+    :return: Loss from lap. 
     """
-    for epoch in range(epochs):
-        for i, data in enumerate(data_loader, 0):
-            images, targets = data
+    model.train()
+    for data in data_loader:
+        images, targets = data
 
-            optimizer.zero_grad()
+        optimizer.zero_grad()
+
+        outputs = model(images)  # nn.module __call__()
+        loss = criterion(outputs, targets)
+        loss.backward()
+        optimizer.step()
+            
+        return loss.item()
+        
+        
+def validation_lap(model: Module, data_loader: DataLoader, criterion: Module) -> float:
+    """
+    Execute a validation lap on the model.
+
+    :param model: Model to be trained.
+    :param data_loader: Data loader that contains training data.
+    :param criterion: Loss function used to train the model.
+    :return: Loss from lap. 
+    """
+    model.eval()
+    with torch.no_grad():
+        for data in data_loader:
+            images, targets = data
 
             outputs = model(images)  # nn.module __call__()
             loss = criterion(outputs, targets)
-            loss.backward()
-            optimizer.step()
-
-            running_loss += loss.item()
-            if i % 2000 == 1999:  # print every 2000 mini-batches
-                logger.info("[%d, %5d] loss: %.3f" %
-                            (epoch + 1, i + 1, running_loss / 2000))
-                running_loss = 0.0
-
-
+            
+            return loss.item()
+    
+                
 def evaluate(
         model: Module,
         data_loader: DataLoader
