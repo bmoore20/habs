@@ -28,8 +28,9 @@ def training_lap(model: Module, data_loader: DataLoader, optimizer: Optimizer, c
     :param data_loader: Data loader that contains training data.
     :param optimizer: Optimization algorithm used to train the model.
     :param criterion: Loss function used to train the model.
-    :return: Loss from lap. 
+    :return: Running loss from training lap. 
     """
+    running_loss = 0
     model.train()
     for data in data_loader:
         images, targets = data
@@ -41,7 +42,9 @@ def training_lap(model: Module, data_loader: DataLoader, optimizer: Optimizer, c
         loss.backward()
         optimizer.step()
             
-        return loss.item()
+        running_loss += loss.item()
+        
+     return running_loss
         
         
 def validation_lap(model: Module, data_loader: DataLoader, criterion: Module) -> float:
@@ -51,8 +54,9 @@ def validation_lap(model: Module, data_loader: DataLoader, criterion: Module) ->
     :param model: Model to be trained.
     :param data_loader: Data loader that contains training data.
     :param criterion: Loss function used to train the model.
-    :return: Loss from lap. 
+    :return: Running loss from validation lap. 
     """
+    running_loss = 0
     model.eval()
     with torch.no_grad():
         for data in data_loader:
@@ -61,7 +65,9 @@ def validation_lap(model: Module, data_loader: DataLoader, criterion: Module) ->
             outputs = model(images)  # nn.module __call__()
             loss = criterion(outputs, targets)
             
-            return loss.item()
+            running_loss += loss.item()
+            
+    return running_loss
     
                 
 def evaluate(
