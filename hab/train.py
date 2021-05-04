@@ -27,6 +27,7 @@ logger.addHandler(habs_logging.fh)
 
 def train(
         train_data_dir: str,
+        valid_data_dir: str,
         test_data_dir: str,
         model: Module,
         epochs: int,
@@ -38,6 +39,7 @@ def train(
     Complete training and evaluation for HABsModelCNN.
 
     :param train_data_dir: Directory path for training dataset.
+    :param valid_data_dir: Directory path for validation dataset.
     :param test_data_dir: Directory path for testing dataset.
     :param model: Model to be trained and evaluated.
     :param epochs: Number of epochs that training loop will complete.
@@ -60,15 +62,21 @@ def train(
     ])
 
     train_dataset = HABsDataset(train_data_dir, data_transform, "train", magnitude_increase)
+    valid_dataset = HABsDataset(valid_data_dir, data_transform, "validation", magnitude_increase)
     test_dataset = HABsDataset(test_data_dir, data_transform, "test", magnitude_increase)
 
     train_loader = DataLoader(train_dataset)
+    valid_loader = DataLoader(valid_dataset)
     test_loader = DataLoader(test_dataset)
 
     logger.info("Initial Seed: %d" % (torch.initial_seed()))
 
     logger.info("Training model.")
-    training_laps(model, train_loader, epochs, optimizer, criterion)
+    for epoch in range(epoch):
+        train_loss = training_lap(model, train_loader, optimizer, criterion)
+        valid_loss = validation_lap(model, valid_loader, criterion)
+        
+        # TODO - log info about losses
 
     logger.info("Testing model.")
     evaluate(model, test_loader)
@@ -76,6 +84,7 @@ def train(
 
 def main(
         train_dataset: str,
+        valid_dataset: str,
         test_dataset: str,
         model_type: str,
         epochs: int,
@@ -87,8 +96,8 @@ def main(
     """
     Carry out full HABs program functionality.
 
-    Pass in directory paths for training and testing datasets, model type, number of epochs,
-    loss type, optimizer type, learning rate and dataset magnitude increase value.
+    Pass in directory paths for training, validation and testing datasets, model type, number
+    of epochs, loss type, optimizer type, learning rate and dataset magnitude increase value.
     """
     logger.info(
         f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} Optimizer: {optimizer_type} Learn Rate: {learn_rate} Mag Inc: {magnitude_increase}"
@@ -96,7 +105,7 @@ def main(
     model = selectors.model_selector(model_type)
     criterion = selectors.criterion_selector(loss_type)
     optimizer = selectors.optimizer_selector(optimizer_type, learn_rate)
-    train(train_dataset, test_dataset, model, epochs, optimizer, criterion, magnitude_increase)
+    train(train_dataset, valid_dataset, test_dataset, model, epochs, optimizer, criterion, magnitude_increase)
 
 
 if __name__ == "__main__":
