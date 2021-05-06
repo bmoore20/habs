@@ -29,6 +29,7 @@ def train(
         train_data_dir: str,
         valid_data_dir: str,
         test_data_dir: str,
+        save_model_dir: str,
         model: Module,
         epochs: int,
         optimizer: Optimizer,
@@ -41,6 +42,7 @@ def train(
     :param train_data_dir: Directory path for training dataset.
     :param valid_data_dir: Directory path for validation dataset.
     :param test_data_dir: Directory path for testing dataset.
+    :param save_model_dir: Directory path where trained model will be saved. 
     :param model: Model to be trained and evaluated.
     :param epochs: Number of epochs that training loop will complete.
     :param optimizer: Optimization algorithm used to train the model.
@@ -78,6 +80,9 @@ def train(
         
         logger.info("Epoch #{} Training Loss: {:.7f} Validation Loss: {:.7f}".format(epoch, train_loss, valid_loss))
 
+    torch.save(model.state_dict(), save_model_dir)
+    logger.info("Saved trained model.")
+    
     logger.info("Testing model.")
     evaluate(model, test_loader)
 
@@ -86,6 +91,7 @@ def main(
         train_dataset: str,
         valid_dataset: str,
         test_dataset: str,
+        save_model_dir: str,
         model_type: str,
         epochs: int,
         loss_type: str,
@@ -96,8 +102,8 @@ def main(
     """
     Carry out full HABs program functionality.
 
-    Pass in directory paths for training, validation and testing datasets, model type, number
-    of epochs, loss type, optimizer type, learning rate and dataset magnitude increase value.
+    Pass in directory paths for training, validation and testing datasets, directory path where trained model will be 
+    saved, model type, numberof epochs, loss type, optimizer type, learning rate and dataset magnitude increase value.
     """
     logger.info(
         f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} Optimizer: {optimizer_type} Learn Rate: {learn_rate} Mag Inc: {magnitude_increase}"
@@ -105,7 +111,7 @@ def main(
     model = selectors.model_selector(model_type)
     criterion = selectors.criterion_selector(loss_type)
     optimizer = selectors.optimizer_selector(optimizer_type, learn_rate)
-    train(train_dataset, valid_dataset, test_dataset, model, epochs, optimizer, criterion, magnitude_increase)
+    train(train_dataset, valid_dataset, test_dataset, save_model_dir, model, epochs, optimizer, criterion, magnitude_increase)
 
 
 if __name__ == "__main__":
