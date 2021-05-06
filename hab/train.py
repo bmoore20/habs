@@ -34,6 +34,7 @@ def train(
         epochs: int,
         optimizer: Optimizer,
         criterion: Module,
+        size_of_batch: int = 1
         magnitude_increase: int = 1
 ):
     """
@@ -47,7 +48,8 @@ def train(
     :param epochs: Number of epochs that training loop will complete.
     :param optimizer: Optimization algorithm used to train the model.
     :param criterion: Loss function used to train the model.
-    :param magnitude_increase: Amount to multiple original number of samples by.
+    :param size_of_batch: Size of batches used in epochs. Default is 1. 
+    :param magnitude_increase: Amount to multiply original number of samples by. Defalut is 1.
     """
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
@@ -67,9 +69,9 @@ def train(
     valid_dataset = HABsDataset(valid_data_dir, data_transform, "validation", magnitude_increase)
     test_dataset = HABsDataset(test_data_dir, data_transform, "test", magnitude_increase)
 
-    train_loader = DataLoader(train_dataset)
-    valid_loader = DataLoader(valid_dataset)
-    test_loader = DataLoader(test_dataset)
+    train_loader = DataLoader(train_dataset, batch_size = size_of_batch)
+    valid_loader = DataLoader(valid_dataset, batch_size = size_of_batch)
+    test_loader = DataLoader(test_dataset, batch_size = size_of_batch)
 
     logger.info("Initial Seed: %d" % (torch.initial_seed()))
 
@@ -97,13 +99,14 @@ def main(
         loss_type: str,
         optimizer_type: str,
         learn_rate: float,
+        batch_size: int = typer.Argument(1)
         magnitude_increase: int = typer.Argument(1)
 ):
     """
     Carry out full HABs program functionality.
 
-    Pass in directory paths for training, validation and testing datasets, directory path where trained model will be 
-    saved, model type, numberof epochs, loss type, optimizer type, learning rate and dataset magnitude increase value.
+    Pass in directory paths for training, validation and testing datasets, directory path where trained model will be saved,
+    model type, numberof epochs, loss type, optimizer type, learning rate, batch size and dataset magnitude increase value.
     """
     logger.info(
         f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} Optimizer: {optimizer_type} Learn Rate: {learn_rate} Mag Inc: {magnitude_increase}"
@@ -111,7 +114,7 @@ def main(
     model = selectors.model_selector(model_type)
     criterion = selectors.criterion_selector(loss_type)
     optimizer = selectors.optimizer_selector(optimizer_type, learn_rate)
-    train(train_dataset, valid_dataset, test_dataset, save_model_dir, model, epochs, optimizer, criterion, magnitude_increase)
+    train(train_dataset, valid_dataset, test_dataset, save_model_dir, model, epochs, optimizer, criterion, batch_size, magnitude_increase)
 
 
 if __name__ == "__main__":
