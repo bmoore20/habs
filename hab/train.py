@@ -109,7 +109,7 @@ def main(
     model type, numberof epochs, loss type, optimizer type, learning rate, batch size and dataset magnitude increase value.
     """
     logger.info(
-        f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} Optimizer: {optimizer_type} Learn Rate: {learn_rate} Mag Inc: {magnitude_increase}"
+        f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} Optimizer: {optimizer_type} Learn Rate: {learn_rate} Batch Size: {batch_size} Mag Inc: {magnitude_increase}"
     )
     model = selectors.model_selector(model_type)
     criterion = selectors.criterion_selector(loss_type)
