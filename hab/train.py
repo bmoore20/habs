@@ -34,7 +34,7 @@ def train(
         epochs: int,
         optimizer: Optimizer,
         criterion: Module,
-        size_of_batch: int = 1
+        size_of_batch: int = 1,
         magnitude_increase: int = 1
 ):
     """
@@ -99,7 +99,7 @@ def main(
         loss_type: str,
         optimizer_type: str,
         learn_rate: float,
-        batch_size: int = typer.Argument(1)
+        batch_size: int = typer.Argument(1),
         magnitude_increase: int = typer.Argument(1)
 ):
     """
