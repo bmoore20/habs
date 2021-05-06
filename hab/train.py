@@ -13,8 +13,7 @@ from hab.utils.training_helper import training_laps, evaluate
 
 # ------------ logging ------------
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s HABs:%(levelname)s - %(name)s - %(message)s"
+    level=logging.INFO, format="%(asctime)s HABs:%(levelname)s - %(name)s - %(message)s"
 )
 
 logging.captureWarnings(True)
@@ -58,20 +57,33 @@ def train(
     logger.info("Loading data.")
 
     # TODO - experiment with different combinations of transformations
-    data_transform = transforms.Compose([
-        Crop(),
-        Rescale((32, 32)),
-        transforms.ToTensor(),
-        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))  # Calculated on ImageNet dataset
-    ])
+    data_transform = transforms.Compose(
+        [
+            Crop(),
+            Rescale((32, 32)),
+            transforms.ToTensor(),
+            transforms.Normalize(
+                (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+            ),  # Calculated on ImageNet dataset
+         ]
+    )
 
-    train_dataset = HABsDataset(train_data_dir, data_transform, "train", magnitude_increase)
-    valid_dataset = HABsDataset(valid_data_dir, data_transform, "validation", magnitude_increase)
-    test_dataset = HABsDataset(test_data_dir, data_transform, "test", magnitude_increase)
+    train_dataset = HABsDataset(
+        train_data_dir, data_transform, "train", magnitude_increase
+    )
+    valid_dataset = HABsDataset(
+        valid_data_dir, data_transform, "validation", magnitude_increase
+    )
+    test_dataset = HABsDataset(
+        test_data_dir, data_transform, "test", magnitude_increase
+    )
 
     train_loader = DataLoader(train_dataset, batch_size = size_of_batch)
     valid_loader = DataLoader(valid_dataset, batch_size = size_of_batch)
     test_loader = DataLoader(test_dataset, batch_size = size_of_batch)
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    logger.info(f"Device: {device.type}")
 
     logger.info("Initial Seed: %d" % (torch.initial_seed()))
 

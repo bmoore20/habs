@@ -7,4 +7,4 @@ LOGFILE = "./log.log"
 Path(LOGFILE).parent.mkdir(parents=True, exist_ok=True)
 
 ch = logging.StreamHandler(sys.stdout)
-fh = RotatingFileHandler(LOGFILE, maxBytes=2**32, backupCount=1)
+fh = RotatingFileHandler(LOGFILE, maxBytes=2 ** 32, backupCount=1)
