@@ -32,7 +32,7 @@ def training_lap(model: Module, data_loader: DataLoader, optimizer: Optimizer, c
     """
     running_loss = 0
     model.train()
-    for data in data_loader:
+    for batch in data_loader:
         images, targets = data
 
         optimizer.zero_grad()
@@ -59,7 +59,7 @@ def validation_lap(model: Module, data_loader: DataLoader, criterion: Module) ->
     running_loss = 0
     model.eval()
     with torch.no_grad():
-        for data in data_loader:
+        for batch in data_loader:
             images, targets = data
 
             outputs = model(images)  # nn.module __call__()
@@ -85,7 +85,7 @@ def evaluate(
 
     model.eval()
     with torch.no_grad():
-        for data in data_loader:
+        for batch in data_loader:
             images, targets = data
 
             outputs = model(images)  # nn.module __call__()
