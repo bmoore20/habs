@@ -76,7 +76,7 @@ def train(
         train_loss = training_lap(model, train_loader, optimizer, criterion)
         valid_loss = validation_lap(model, valid_loader, criterion)
         
-        # TODO - log info about losses
+        logger.info("Epoch #{} Training Loss: {:.7f} Validation Loss: {:.7f}".format(epoch, train_loss, valid_loss))
 
     logger.info("Testing model.")
     evaluate(model, test_loader)
