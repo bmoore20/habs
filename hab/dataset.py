@@ -120,7 +120,8 @@ class HABsDataset(Dataset):
             target = 2
         else:
             raise ValueError(
-                f"Cannot encode target. Class must be bga, clear, or turbid. Value received: {class_type}"
+                f"Cannot encode target. Class must be bga, clear, or turbid. "
+                f"Value received: {class_type}"
             )
 
         return target
