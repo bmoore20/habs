@@ -48,8 +48,9 @@ def train(
     :param optimizer: Optimization algorithm used to train the model.
     :param criterion: Loss function used to train the model.
     :param size_of_batch: Size of batches used in epochs. Default is 1.
-    :param magnitude_increase: Amount to multiply original number of samples by. Defalut is 1.
+    :param magnitude_increase: Amount to multiply original number of samples by. Default is 1.
     """
+
     # Referenced: https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
     # Referenced: https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
     # Referenced: https://realpython.com/python-logging/
@@ -121,11 +122,14 @@ def main(
     """
     Carry out full HABs program functionality.
 
-    Pass in directory paths for training, validation and testing datasets, directory path where trained model will be saved,
-    model type, numberof epochs, loss type, optimizer type, learning rate, batch size and dataset magnitude increase value.
+    Pass in directory paths for training, validation and testing datasets.
+    Provide directory path where trained model will be saved, model type,
+    number of epochs, loss type, optimizer type, learning rate, batch size
+    and dataset magnitude increase value.
     """
     logger.info(
-        f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} Optimizer: {optimizer_type} Learn Rate: {learn_rate} Batch Size: {batch_size} Mag Inc: {magnitude_increase}"
+        f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} Optimizer: {optimizer_type} "
+        f"Learn Rate: {learn_rate} Batch Size: {batch_size} Mag Inc: {magnitude_increase}"
     )
     model = selectors.model_selector(model_type)
     criterion = selectors.criterion_selector(loss_type)
