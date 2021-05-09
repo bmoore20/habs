@@ -33,9 +33,9 @@ class HABsDataset(Dataset):
         :param magnitude_increase: Amount to multiple original number of samples by.
         """
         self.data_dir = data_dir
+        self._set_mode(mode)
         self.image_paths = self._get_image_paths()
         self.transform = transform
-        self._set_mode(mode)
         self.magnitude_increase = magnitude_increase
 
     def __len__(self) -> int:
