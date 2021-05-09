@@ -1,4 +1,5 @@
 import torch
+from torch.nn import Module
 from typing import Optional
 
 from hab.model.model import HABsModelCNN
@@ -33,19 +34,20 @@ def criterion_selector(loss_type: str) -> torch.nn.Module:
 
 
 def optimizer_selector(
-    optim_type: str, learn_rate: Optional[float] = None
+    optim_type: str, model: Module, learn_rate: Optional[float] = None
 ) -> torch.optim.Optimizer:
     """
     Retrieve specified optimizer object.
 
     :param optim_type: Name of desired optimizer.
+    :param model: Model that contains parameters to be optimized.
     :param learn_rate: Learning rate. If None, torch default value is used.
     :return: Instance of Optimizer object.
     """
     if optim_type == "Adam":
         if learn_rate is not None:
-            return torch.optim.Adam(lr=learn_rate)
+            return torch.optim.Adam(model.parameters(), lr=learn_rate)
         else:
-            return torch.optim.Adam(lr=1e-3)
+            return torch.optim.Adam(model.parameters(), lr=1e-3)
     else:
         raise ValueError(f"Optimizer type must be Adam. Value received: {optim_type}")

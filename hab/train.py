@@ -133,7 +133,7 @@ def main(
     )
     model = selectors.model_selector(model_type)
     criterion = selectors.criterion_selector(loss_type)
-    optimizer = selectors.optimizer_selector(optimizer_type, learn_rate)
+    optimizer = selectors.optimizer_selector(optimizer_type, model, learn_rate)
     train(
         train_dataset,
         valid_dataset,
