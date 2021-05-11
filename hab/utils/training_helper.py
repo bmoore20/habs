@@ -92,6 +92,5 @@ def evaluate(model: Module, data_loader: DataLoader):
             correct += (predicted == targets).sum().item()
 
     logger.info(
-        "Accuracy of the network on the 10000 test images: %d %%"
-        % (100 * correct / total)
+        "Accuracy of the network on the 10 test images: %d %%" % (100 * correct / total)
     )
