@@ -77,6 +77,8 @@ def evaluate(model: Module, data_loader: DataLoader):
 
     :param model: Model to be evaluated.
     :param data_loader: Data loader that contains the test/validation data.
+    :return total: Total number of images tested.
+    :return correct: Number of test images that were classified correctly.
     """
     correct = 0
     total = 0
@@ -91,6 +93,4 @@ def evaluate(model: Module, data_loader: DataLoader):
             total += targets.size(0)
             correct += (predicted == targets).sum().item()
 
-    logger.info(
-        "Accuracy of the network on the 10 test images: %d %%" % (100 * correct / total)
-    )
+            return total, correct

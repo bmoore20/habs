@@ -103,7 +103,10 @@ def train(
     logger.info("Saved trained model.")
 
     logger.info("Testing model.")
-    evaluate(model, test_loader)
+    total, correct = evaluate(model, test_loader)
+    logger.info(
+        "Accuracy of the network on the 10 test images: %d %%" % (100 * correct / total)
+    )
 
 
 def main(
