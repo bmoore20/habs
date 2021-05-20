@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 
 from hab.dataset import HABsDataset
-from hab.transformations import Rescale, Crop
+from hab.transformations import CropTimestamp
 from hab.utils import habs_logging, selectors
 from hab.utils.training_helper import training_lap, validation_lap, evaluate
 
@@ -60,8 +60,8 @@ def train(
     # TODO - experiment with different combinations of transformations
     data_transform = transforms.Compose(
         [
-            Crop(),
-            Rescale((32, 32)),
+            CropTimestamp(),
+            transforms.RandomCrop((32, 32)),
             transforms.ToTensor(),
             transforms.Normalize(
                 (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
