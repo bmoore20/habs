@@ -2,8 +2,11 @@ from pathlib import Path
 import logging
 from logging.handlers import RotatingFileHandler
 import sys
+from datetime import datetime
 
-LOGFILE = "/content/gdrive/MyDrive/habs_google/logfile.log"
+now = datetime.now()
+time_suffix = now.strftime("%Y-%m-%d_%H-%M-%S")
+LOGFILE = f"/content/gdrive/MyDrive/habs_google/logfile_{time_suffix}.log"
 Path(LOGFILE).parent.mkdir(parents=True, exist_ok=True)
 
 ch = logging.StreamHandler(sys.stdout)
