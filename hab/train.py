@@ -4,6 +4,7 @@ import torch
 from torch.nn import Module
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
+from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms
 
 from hab.dataset import HABsDataset
@@ -26,7 +27,7 @@ logger.addHandler(habs_logging.fh)
 
 def train(
     train_data_dir: str,
-    valid_data_dir: str,
+    val_data_dir: str,
     test_data_dir: str,
     save_model_dir: str,
     model: Module,
@@ -40,7 +41,7 @@ def train(
     Complete training and evaluation for HABsModelCNN.
 
     :param train_data_dir: Directory path for training dataset.
-    :param valid_data_dir: Directory path for validation dataset.
+    :param val_data_dir: Directory path for validation dataset.
     :param test_data_dir: Directory path for testing dataset.
     :param save_model_dir: Directory path where trained model will be saved.
     :param model: Model to be trained and evaluated.
@@ -69,19 +70,23 @@ def train(
         ]
     )
 
+    # TODO - make separate transform object for test_dataset?
+
     train_dataset = HABsDataset(
         train_data_dir, data_transform, "train", magnitude_increase
     )
-    valid_dataset = HABsDataset(
-        valid_data_dir, data_transform, "validation", magnitude_increase
+    val_dataset = HABsDataset(
+        val_data_dir, data_transform, "validation", magnitude_increase
     )
     test_dataset = HABsDataset(
         test_data_dir, data_transform, "test", magnitude_increase
     )
 
     train_loader = DataLoader(train_dataset, batch_size=size_of_batch)
-    valid_loader = DataLoader(valid_dataset, batch_size=size_of_batch)
+    val_loader = DataLoader(val_dataset, batch_size=size_of_batch)
     test_loader = DataLoader(test_dataset, batch_size=size_of_batch)
+
+    writer = SummaryWriter()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Device: {device.type}")
@@ -91,13 +96,19 @@ def train(
     logger.info("Training model.")
     for epoch in range(epochs):
         train_loss = training_lap(model, train_loader, optimizer, criterion)
-        valid_loss = validation_lap(model, valid_loader, criterion)
+        val_loss = validation_lap(model, val_loader, criterion)
+
+        writer.add_scalar("Loss/train", train_loss, epoch)
+        writer.add_scalar("Loss/val", val_loss, epoch)
 
         logger.info(
             "Epoch #{} Training Loss: {:.7f} Validation Loss: {:.7f}".format(
-                epoch, train_loss, valid_loss
+                epoch, train_loss, val_loss
             )
         )
+
+    writer.flush()
+    writer.close()
 
     torch.save(model.state_dict(), save_model_dir)
     logger.info("Saved trained model.")
@@ -111,7 +122,7 @@ def train(
 
 def main(
     train_dataset: str,
-    valid_dataset: str,
+    val_dataset: str,
     test_dataset: str,
     save_model_dir: str,
     model_type: str,
@@ -139,7 +150,7 @@ def main(
     optimizer = selectors.optimizer_selector(optimizer_type, model, learn_rate)
     train(
         train_dataset,
-        valid_dataset,
+        val_dataset,
         test_dataset,
         save_model_dir,
         model,
