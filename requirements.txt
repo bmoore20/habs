@@ -2,5 +2,6 @@ opencv-contrib-python
 imutils
 torch
 torchvision
+tensorboard
 typer[all]
 pre-commit
