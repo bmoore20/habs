@@ -4,7 +4,6 @@ import torch
 from torch.nn import Module
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
-from torch.utils.tensorboard import SummaryWriter
 from torchvision import transforms
 
 from hab.dataset import HABsDataset
@@ -22,6 +21,10 @@ logging.captureWarnings(True)
 logger = logging.getLogger(__name__)
 logger.addHandler(habs_logging.ch)
 logger.addHandler(habs_logging.fh)
+# ---------------------------------
+
+# -------- tensorboard ------------
+writer = habs_logging.sw
 # ---------------------------------
 
 
@@ -86,8 +89,6 @@ def train(
     val_loader = DataLoader(val_dataset, batch_size=size_of_batch)
     test_loader = DataLoader(test_dataset, batch_size=size_of_batch)
 
-    writer = SummaryWriter()
-
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     logger.info(f"Device: {device.type}")
 
@@ -106,9 +107,6 @@ def train(
                 epoch, train_loss, val_loss
             )
         )
-
-    writer.flush()
-    writer.close()
 
     torch.save(model.state_dict(), save_model_dir)
     logger.info("Saved trained model.")
@@ -160,6 +158,8 @@ def main(
         batch_size,
         magnitude_increase,
     )
+    writer.flush()
+    writer.close()
 
 
 if __name__ == "__main__":
