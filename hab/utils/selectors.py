@@ -1,19 +1,28 @@
 import torch
 from torch.nn import Module
-from typing import Optional
+from typing import Optional, List
 
-from hab.model.model import HABsModelCNN
+from hab.model.model import HABsModelCNN, HABsResNet
+from hab.model.blocks.block import Block
 
 
-def model_selector(model_type: str) -> torch.nn.Module:
+def model_selector(
+    model_type: str, layers: Optional[List[int]] = None
+) -> torch.nn.Module:
     """
     Retrieve specified model object.
 
     :param model_type: Name of desired model.
+    :param layers: Layers in ResNet model. None if model is not ResNet.
     :return: Instance of HABs Model.
     """
     if model_type == "CNN":
         return HABsModelCNN()
+    elif model_type == "ResNet":
+        if layers is not None:
+            return HABsResNet(Block, layers)
+        else:
+            return HABsResNet(Block, [2, 2, 2, 2])
     else:
         raise ValueError(f"Model type must be CNN. Value received: {model_type}")
 
