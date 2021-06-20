@@ -5,7 +5,7 @@ from torch import Tensor
 from typing import Type, List, Optional, Callable
 
 from hab.model.blocks.block import Block
-from hab.model.blocks.resnet import conv1x1
+from hab.utils.resnet_helper import conv1x1
 
 # TODO - meaning of parameters for CNN methods
 # TODO - add in 3rd conv and pool to match Keras model
