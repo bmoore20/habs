@@ -4,7 +4,6 @@ from typing import Optional, Callable
 
 from hab.utils.resnet_helper import conv3x3
 
-
 # Referenced: https://github.com/pytorch/vision/blob/master/torchvision/models/resnet.py
 
 
