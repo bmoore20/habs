@@ -1,9 +1,9 @@
+import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
 from PIL import Image
 from typing import List, Union, Tuple
 from pathlib import Path
-import torch
 
 
 class HABsDataset(Dataset):

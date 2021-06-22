@@ -5,6 +5,7 @@ from torch.nn import Module
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
 from torchvision import transforms
+from typing import Optional, List
 
 from hab.dataset import HABsDataset
 from hab.transformations import CropTimestamp
@@ -128,6 +129,7 @@ def main(
     loss_type: str,
     optimizer_type: str,
     learn_rate: float,
+    layers: Optional[List[int]] = None,
     batch_size: int = typer.Argument(1),
     magnitude_increase: int = typer.Argument(1),
 ):
@@ -136,14 +138,15 @@ def main(
 
     Pass in directory paths for training, validation and testing datasets.
     Provide directory path where trained model will be saved, model type,
-    number of epochs, loss type, optimizer type, learning rate, batch size
-    and dataset magnitude increase value.
+    number of epochs, loss type, optimizer type, learning rate, ResNet model layers,
+    batch size and dataset magnitude increase value.
     """
     logger.info(
-        f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} Optimizer: {optimizer_type} "
-        f"Learn Rate: {learn_rate} Batch Size: {batch_size} Mag Inc: {magnitude_increase}"
+        f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} "
+        f"Optimizer: {optimizer_type} Learn Rate: {learn_rate} Layers: {layers} "
+        f"Batch Size: {batch_size} Mag Inc: {magnitude_increase}"
     )
-    model = selectors.model_selector(model_type)
+    model = selectors.model_selector(model_type, layers)
     criterion = selectors.criterion_selector(loss_type)
     optimizer = selectors.optimizer_selector(optimizer_type, model, learn_rate)
     train(
