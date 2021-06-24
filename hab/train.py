@@ -63,10 +63,13 @@ def train(
     logger.info("Loading data.")
 
     # TODO - experiment with different combinations of transformations
-    data_transform = transforms.Compose(
+    train_val_transform = transforms.Compose(
         [
             CropTimestamp(),
             transforms.RandomCrop((32, 32)),
+            transforms.RandomRotation(90),
+            # transforms.RandomVerticalFlip(0.5),
+            # transforms.RandomHorizontalFlip(0.5),
             transforms.ToTensor(),
             transforms.Normalize(
                 (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
@@ -74,16 +77,29 @@ def train(
         ]
     )
 
-    # TODO - make separate transform object for test_dataset?
+    test_transform = transforms.Compose(
+        [
+            CropTimestamp(),
+            transforms.Resize((32, 32)),
+            transforms.ToTensor(),
+            transforms.Normalize(
+                (0.485, 0.456, 0.406), (0.229, 0.224, 0.225)
+            ),  # Calculated on ImageNet dataset
+        ]
+    )
+
+    logger.info(f"Train/Val Transforms Applied: {train_val_transform}")
+    logger.info(f"Test Transforms Applied: {test_transform}")
+    logger.info(f"Model Architecture: {model}")
 
     train_dataset = HABsDataset(
-        train_data_dir, data_transform, "train", magnitude_increase
+        train_data_dir, train_val_transform, "train", magnitude_increase
     )
     val_dataset = HABsDataset(
-        val_data_dir, data_transform, "validation", magnitude_increase
+        val_data_dir, train_val_transform, "validation", magnitude_increase
     )
     test_dataset = HABsDataset(
-        test_data_dir, data_transform, "test", magnitude_increase
+        test_data_dir, test_transform, "test", magnitude_increase
     )
 
     train_loader = DataLoader(train_dataset, batch_size=size_of_batch)
