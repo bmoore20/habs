@@ -1,7 +1,7 @@
 import logging
 import typer
 import torch
-from torch.nn import Module
+from torch import nn
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
 from torchvision import transforms
@@ -34,10 +34,10 @@ def train(
     val_data_dir: str,
     test_data_dir: str,
     save_model_dir: str,
-    model: Module,
+    model: nn.Module,
     epochs: int,
     optimizer: Optimizer,
-    criterion: Module,
+    criterion: nn.Module,
     size_of_batch: int = 1,
     magnitude_increase: int = 1,
 ):
