@@ -9,7 +9,7 @@ from pathlib import Path
 class HABsDataset(Dataset):
     """
     Dataset of images from the Finger Lakes.
-    Each image can be classified as either bga (blue-green algae), clear, or turbid.
+    Each image can be classified as either bga (blue-green algae) or non-algae (clear or turbid).
 
     Currently the dataset supports JPG images that are 1280 x 736 px.
     """
@@ -106,7 +106,7 @@ class HABsDataset(Dataset):
         Create numeric target values for image.
 
         :param idx: Index of where image is in list.
-        :return: Encoded label for specified image. Value needs to be 0 (bga), 1 (clear), or 2 (turbid).
+        :return: Encoded label for specified image. Value needs to be 0 (bga) or 1 (non-algae).
         :raises: ValueError
         """
         image_path = self.image_paths[idx]
@@ -114,13 +114,11 @@ class HABsDataset(Dataset):
 
         if class_type == "bga":
             target = 0
-        elif class_type == "clear":
+        elif class_type == "non-algae":
             target = 1
-        elif class_type == "turbid":
-            target = 2
         else:
             raise ValueError(
-                f"Cannot encode target. Class must be bga, clear, or turbid. "
+                f"Cannot encode target. Class must be bga or non-algae. "
                 f"Value received: {class_type}"
             )
 
