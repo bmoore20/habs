@@ -114,7 +114,7 @@ class HABsDataset(Dataset):
 
         if class_type == "bga":
             target = 0
-        elif class_type == "non-algae":
+        elif class_type == "non_algae":
             target = 1
         else:
             raise ValueError(
