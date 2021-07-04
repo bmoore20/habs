@@ -74,7 +74,7 @@ class HABsDataset(Dataset):
             image_paths = [
                 fp
                 for fp in all_paths
-                if fp.suffix == ".jpg" and fp.parent.name in {"bga", "clear", "turbid"}
+                if fp.suffix == ".jpg" and fp.parent.name in {"bga", "non_algae"}
             ]
         else:
             # Images for classify do not have to be sorted into specific class directories
