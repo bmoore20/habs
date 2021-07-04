@@ -1,22 +1,7 @@
-import logging
 import torch
 from torch.nn import Module
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
-
-from hab.utils import habs_logging
-
-# ------------ logging ------------
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s HABs:%(levelname)s - %(name)s - %(message)s"
-)
-
-logging.captureWarnings(True)
-
-logger = logging.getLogger(__name__)
-logger.addHandler(habs_logging.ch)
-logger.addHandler(habs_logging.fh)
-# ---------------------------------
 
 
 def training_lap(
@@ -77,6 +62,8 @@ def evaluate(model: Module, data_loader: DataLoader):
 
     :param model: Model to be evaluated.
     :param data_loader: Data loader that contains the test/validation data.
+    :return predictions: Predicted probabilities for possible classes per image.
+    :return classifications: Classification value for each image.
     :return total: Total number of images tested.
     :return correct: Number of test images that were classified correctly.
     """
@@ -89,8 +76,9 @@ def evaluate(model: Module, data_loader: DataLoader):
             images, targets = batch
 
             outputs = model(images)  # nn.module __call__()
-            _, predicted = torch.max(outputs.data, 1)
+            predictions = outputs.data
+            _, classifications = torch.max(predictions, 1)
             total += targets.size(0)
-            correct += (predicted == targets).sum().item()
+            correct += (classifications == targets).sum().item()
 
-            return total, correct
+            return predictions, classifications, total, correct
