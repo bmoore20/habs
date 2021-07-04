@@ -2,6 +2,7 @@ import torch
 from torch.nn import Module
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
+from typing import Tuple
 
 
 def training_lap(
@@ -56,7 +57,9 @@ def validation_lap(model: Module, data_loader: DataLoader, criterion: Module) ->
     return running_loss
 
 
-def evaluate(model: Module, data_loader: DataLoader):
+def evaluate(
+    model: Module, data_loader: DataLoader
+) -> Tuple[torch.Tensor, torch.Tensor, int, int]:
     """
     Evaluate the trained model.
 
