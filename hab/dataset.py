@@ -118,7 +118,7 @@ class HABsDataset(Dataset):
             target = 1
         else:
             raise ValueError(
-                f"Cannot encode target. Class must be bga or non-algae. "
+                f"Cannot encode target. Class must be bga or non_algae. "
                 f"Value received: {class_type}"
             )
 
