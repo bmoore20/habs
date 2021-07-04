@@ -26,8 +26,6 @@ logger.addHandler(habs_logging.fh)
 
 # -------- tensorboard ------------
 writer = habs_logging.sw
-
-
 # ---------------------------------
 
 
