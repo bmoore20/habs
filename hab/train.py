@@ -134,7 +134,7 @@ def train(
     logger.info(f"  Target Values: {targets}")
     logger.info(f"Classifications: {classifications}")
     logger.info(
-        "Accuracy of the network on the 10 test images: %d %%" % (100 * correct / total)
+        "Accuracy of the network on the test images: %d %%" % (100 * correct / total)
     )
 
 
