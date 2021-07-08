@@ -69,6 +69,7 @@ def evaluate(
     :return classifications: Classification value for each image.
     :return total: Total number of images tested.
     :return correct: Number of test images that were classified correctly.
+    :return targets: The correct class labels for the images.
     """
     correct = 0
     total = 0
@@ -84,4 +85,4 @@ def evaluate(
             total += targets.size(0)
             correct += (classifications == targets).sum().item()
 
-            return predictions, classifications, total, correct
+            return predictions, classifications, total, correct, targets
