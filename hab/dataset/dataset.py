@@ -32,7 +32,7 @@ class HABsDataset(Dataset):
 
         :param data_dir: Directory path that contains the dataset's images.
         :param transform: Transforms to apply to dataset images. None not supported.
-        :param mode: Mode of the dataset - "train", "validation", "test", or "classify"
+        :param mode: Mode of the dataset - "train", "evaluate", or "classify"
         :param oversample_strength: The magnitude to increase the bga images by.
         :param magnitude_increase: Amount to multiple original number of samples by.
         """
@@ -55,14 +55,14 @@ class HABsDataset(Dataset):
         """
         Set behavior for the dataset.
 
-        :param mode: Mode of the dataset - "train", "validation", "test", or "classify"
+        :param mode: Mode of the dataset - "train", "evaluate", or "classify"
         :raises: ValueError
         """
-        if mode in {"train", "validation", "test", "classify"}:
+        if mode in {"train", "evaluate", "classify"}:
             self.mode = mode
         else:
             raise ValueError(
-                f"Dataset mode must be either train, validation, test, or classify. "
+                f"Dataset mode must be either train, evaluate, or classify. "
                 f"Value received: {mode}"
             )
 
@@ -76,7 +76,7 @@ class HABsDataset(Dataset):
         bga_paths = []
         non_algae_paths = []
 
-        if self.mode in {"train", "validation", "test"}:
+        if self.mode in {"train", "evaluate"}:
             # Only select image files that are in specified class directories
             for path in all_paths:
                 if is_image_path(path) and path.parent.name == "bga":
@@ -144,10 +144,10 @@ class HABsDataset(Dataset):
         Retrieve a specific image from the dataset.
 
         :param idx: Index of where image is in list.
-        :return: Image and target value if dataset mode is "train", "validation", or "test".
+        :return: Image and target value if dataset mode is "train" or "evaluate".
                  Only Image if dataset mode is "classify".
         """
-        if self.mode in {"train", "validation", "test"}:
+        if self.mode in {"train", "evaluate"}:
             idx = idx % len(self.image_paths)  # account for magnitude increase
             image = self._get_image(idx)
             target = self._make_target(idx)

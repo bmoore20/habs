@@ -107,11 +107,11 @@ def train(
     val_dataset = HABsDataset(
         val_data_dir,
         train_val_transform,
-        "validation",
+        "evaluate",
         magnitude_increase,
     )
     test_dataset = HABsDataset(
-        test_data_dir, test_transform, "test", magnitude_increase
+        test_data_dir, test_transform, "evaluate", magnitude_increase
     )
 
     train_loader = DataLoader(train_dataset, batch_size=size_of_batch)
