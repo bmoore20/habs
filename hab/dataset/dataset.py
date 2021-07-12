@@ -24,7 +24,7 @@ class HABsDataset(Dataset):
         data_dir: str,
         transform: transforms.Compose,
         mode: str = "train",
-        over_sample_strength: int = 1,
+        oversample_strength: int = 1,
         magnitude_increase: int = 1,
     ):
         """
@@ -33,14 +33,14 @@ class HABsDataset(Dataset):
         :param data_dir: Directory path that contains the dataset's images.
         :param transform: Transforms to apply to dataset images. None not supported.
         :param mode: Mode of the dataset - "train", "evaluate", or "classify"
-        :param over_sample_strength: The magnitude to increase the bga images by.
+        :param oversample_strength: The magnitude to increase the bga images by.
         :param magnitude_increase: Amount to multiple original number of samples by.
         """
         self.data_dir = data_dir
         self._set_mode(mode)
         self.image_paths = self._get_image_paths()
         self.transform = transform
-        self.over_sample_strength = over_sample_strength
+        self.oversample_strength = oversample_strength
         self.magnitude_increase = magnitude_increase
 
     def __len__(self) -> int:
@@ -86,8 +86,10 @@ class HABsDataset(Dataset):
                 if is_image_path(path) and path.parent.name == "non_algae":
                     non_algae_paths.append(path)
 
+            bga_os_paths = bga_paths * self.oversample_strength
+
             # Apply oversampling for bga images and combine image paths from both classes
-            image_paths = bga_paths * self.over_sample_strength + non_algae_paths
+            image_paths = bga_os_paths + non_algae_paths
 
         else:
             # Images for classify do not have to be sorted into specific class directories
