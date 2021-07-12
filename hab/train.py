@@ -39,6 +39,7 @@ def train(
     optimizer: Optimizer,
     criterion: nn.Module,
     size_of_batch: int = 1,
+    oversample_strength: int = 1,
     magnitude_increase: int = 1,
 ):
     """
@@ -53,6 +54,7 @@ def train(
     :param optimizer: Optimization algorithm used to train the model.
     :param criterion: Loss function used to train the model.
     :param size_of_batch: Size of batches used in epochs. Default is 1.
+    :param oversample_strength: The magnitude to increase the BGA images by. Default is 1.
     :param magnitude_increase: Amount to multiply original number of samples by. Default is 1.
     """
 
@@ -92,11 +94,21 @@ def train(
     logger.info(f"Test Transforms Applied: {test_transform}")
     logger.info(f"Model Architecture: {model}")
 
+    # Only add BGA oversample strength to training dataset because the image ratio between
+    # class image sets (BGA and Non-Algae) is not a factor in evaluation
+    # TODO - test this logic out in Colab and make permanent change in train.py
     train_dataset = HABsDataset(
-        train_data_dir, train_val_transform, "train", magnitude_increase
+        train_data_dir,
+        train_val_transform,
+        "train",
+        magnitude_increase,
+        oversample_strength,
     )
     val_dataset = HABsDataset(
-        val_data_dir, train_val_transform, "validation", magnitude_increase
+        val_data_dir,
+        train_val_transform,
+        "validation",
+        magnitude_increase,
     )
     test_dataset = HABsDataset(
         test_data_dir, test_transform, "test", magnitude_increase
@@ -150,6 +162,7 @@ def main(
     learn_rate: float,
     layers: Optional[List[int]] = None,
     batch_size: int = typer.Argument(1),
+    oversample_strength: int = typer.Argument(1),
     magnitude_increase: int = typer.Argument(1),
 ):
     """
@@ -158,12 +171,13 @@ def main(
     Pass in directory paths for training, validation and testing datasets.
     Provide directory path where trained model will be saved, model type,
     number of epochs, loss type, optimizer type, learning rate, ResNet model layers,
-    batch size and dataset magnitude increase value.
+    batch size, bga oversample strength and dataset magnitude increase value.
     """
     logger.info(
         f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} "
         f"Optimizer: {optimizer_type} Learn Rate: {learn_rate} Layers: {layers} "
-        f"Batch Size: {batch_size} Mag Inc: {magnitude_increase}"
+        f"Batch Size: {batch_size} BGA Oversample Strength: {oversample_strength} "
+        f"Mag Inc: {magnitude_increase}"
     )
     model = selectors.model_selector(model_type, layers)
     criterion = selectors.criterion_selector(loss_type)
@@ -178,6 +192,7 @@ def main(
         optimizer,
         criterion,
         batch_size,
+        oversample_strength,
         magnitude_increase,
     )
     writer.flush()

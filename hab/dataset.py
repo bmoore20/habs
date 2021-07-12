@@ -2,8 +2,10 @@ import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
 from PIL import Image
-from typing import List, Union, Tuple
+from typing import List, Union, Tuple, Optional
 from pathlib import Path
+
+from hab.utils.general_utils import is_image_path
 
 
 class HABsDataset(Dataset):
@@ -22,6 +24,7 @@ class HABsDataset(Dataset):
         data_dir: str,
         transform: transforms.Compose,
         mode: str = "train",
+        oversample_strength: int = 1,
         magnitude_increase: int = 1,
     ):
         """
@@ -30,12 +33,14 @@ class HABsDataset(Dataset):
         :param data_dir: Directory path that contains the dataset's images.
         :param transform: Transforms to apply to dataset images. None not supported.
         :param mode: Mode of the dataset - "train", "validation", "test", or "classify"
+        :param oversample_strength: The magnitude to increase the bga images by.
         :param magnitude_increase: Amount to multiple original number of samples by.
         """
         self.data_dir = data_dir
         self._set_mode(mode)
         self.image_paths = self._get_image_paths()
         self.transform = transform
+        self.oversample_strength = oversample_strength
         self.magnitude_increase = magnitude_increase
 
     def __len__(self) -> int:
@@ -68,17 +73,27 @@ class HABsDataset(Dataset):
         :return: List containing all of the image paths.
         """
         all_paths = Path(self.data_dir).glob("**/*")
+        bga_paths = []
+        non_algae_paths = []
 
         if self.mode in {"train", "validation", "test"}:
             # Only select image files that are in specified class directories
-            image_paths = [
-                fp
-                for fp in all_paths
-                if fp.suffix == ".jpg" and fp.parent.name in {"bga", "non_algae"}
-            ]
+            for path in all_paths:
+                if is_image_path(path) and path.parent.name == "bga":
+                    bga_paths.append(path)
+                elif is_image_path(path) and path.parent.name == "non_algae":
+                    non_algae_paths.append(path)
+                else:
+                    raise ValueError(
+                        "Cannot process file path. Path must include bga or non_algae folder."
+                    )
+
+            # Apply oversampling for bga images and combine image paths from both classes
+            image_paths = bga_paths * self.oversample_strength + non_algae_paths
+
         else:
             # Images for classify do not have to be sorted into specific class directories
-            image_paths = [fp for fp in all_paths if fp.suffix == ".jpg"]
+            image_paths = [path for path in all_paths if is_image_path(path)]
 
         return image_paths
 
