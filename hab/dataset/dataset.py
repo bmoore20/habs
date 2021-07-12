@@ -81,12 +81,10 @@ class HABsDataset(Dataset):
             for path in all_paths:
                 if is_image_path(path) and path.parent.name == "bga":
                     bga_paths.append(path)
-                elif is_image_path(path) and path.parent.name == "non_algae":
+                    continue
+
+                if is_image_path(path) and path.parent.name == "non_algae":
                     non_algae_paths.append(path)
-                else:
-                    raise ValueError(
-                        "Cannot process file path. Path must include bga or non_algae folder."
-                    )
 
             # Apply oversampling for bga images and combine image paths from both classes
             image_paths = bga_paths * self.oversample_strength + non_algae_paths
