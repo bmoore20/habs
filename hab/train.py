@@ -7,8 +7,8 @@ from torch.utils.data import DataLoader
 from torchvision import transforms
 from typing import Optional, List
 
-from hab.dataset import HABsDataset
-from hab.transformations import CropTimestamp
+from hab.dataset.dataset import HABsDataset
+from hab.dataset.transformations import CropTimestamp
 from hab.utils import habs_logging, selectors
 from hab.utils.training_helper import training_lap, validation_lap, evaluate
 
