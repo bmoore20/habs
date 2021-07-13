@@ -5,8 +5,6 @@ from PIL import Image
 from typing import List, Union, Tuple, Optional
 from pathlib import Path
 
-from hab.utils.general_utils import is_image_path
-
 
 class HABsDataset(Dataset):
     """
@@ -73,18 +71,18 @@ class HABsDataset(Dataset):
 
         :return: List containing all of the image paths.
         """
-        all_paths = Path(self.data_dir).glob("**/*")
+        all_paths = Path(self.data_dir).glob("**/*.jpg")  # only select jpg image files
         bga_paths = []
         non_algae_paths = []
 
         if self.mode in {"train", "evaluate"}:
             # Only select image files that are in specified class directories
             for path in all_paths:
-                if is_image_path(path) and path.parent.name == "bga":
+                if path.parent.name == "bga":
                     bga_paths.append(path)
                     continue
 
-                if is_image_path(path) and path.parent.name == "non_algae":
+                if path.parent.name == "non_algae":
                     non_algae_paths.append(path)
 
             # Apply oversampling for bga images and combine image paths from both classes
@@ -92,7 +90,7 @@ class HABsDataset(Dataset):
 
         else:
             # Images for classify do not have to be sorted into specific class directories
-            image_paths = [path for path in all_paths if is_image_path(path)]
+            image_paths = [path for path in all_paths]
 
         return image_paths
 
