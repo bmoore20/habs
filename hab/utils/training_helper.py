@@ -2,7 +2,7 @@ import torch
 from torch.nn import Module
 from torch.optim import Optimizer
 from torch.utils.data import DataLoader
-from typing import Tuple
+from typing import Tuple, List
 
 
 def training_lap(
@@ -59,20 +59,23 @@ def validation_lap(model: Module, data_loader: DataLoader, criterion: Module) ->
 
 def evaluate(
     model: Module, data_loader: DataLoader
-) -> Tuple[torch.Tensor, torch.Tensor, int, int]:
+) -> Tuple[List[torch.Tensor], List[torch.Tensor], int, int, List[torch.Tensor]]:
     """
     Evaluate the trained model.
 
     :param model: Model to be evaluated.
     :param data_loader: Data loader that contains the test/validation data.
-    :return predictions: Predicted probabilities for possible classes per image.
-    :return classifications: Classification value for each image.
+    :return predicts_cum: Predicted probabilities for possible classes per image.
+    :return class_cum: Classification value for each image. Organized in list of batches.
     :return total: Total number of images tested.
     :return correct: Number of test images that were classified correctly.
-    :return targets: The correct class labels for the images.
+    :return targets_cum: The correct class labels for the images. Organized in list of batches.
     """
     correct = 0
     total = 0
+    predicts_cum = []
+    targets_cum = []
+    class_cum = []
 
     model.eval()
     with torch.no_grad():
@@ -85,4 +88,8 @@ def evaluate(
             total += targets.size(0)
             correct += (classifications == targets).sum().item()
 
-    return predictions, classifications, total, correct, targets
+            targets_cum.append(targets)
+            predicts_cum.append(predictions)
+            class_cum.append(classifications)
+
+    return predicts_cum, class_cum, total, correct, targets_cum
