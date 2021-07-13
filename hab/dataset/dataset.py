@@ -87,7 +87,8 @@ class HABsDataset(Dataset):
                     non_algae_paths.append(path)
 
             # Apply oversampling for bga images and combine image paths from both classes
-            image_paths = bga_paths * self.oversample_strength + non_algae_paths
+            # image_paths = bga_paths * self.oversample_strength + non_algae_paths
+            image_paths = bga_paths * 2 + non_algae_paths
 
         else:
             # Images for classify do not have to be sorted into specific class directories
