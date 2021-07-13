@@ -36,11 +36,12 @@ class HABsDataset(Dataset):
         :param oversample_strength: The magnitude to increase the bga images by.
         :param magnitude_increase: Amount to multiple original number of samples by.
         """
+        # Order of attribute initiation matters due to some being dependent on each other
         self.data_dir = data_dir
         self._set_mode(mode)
+        self.oversample_strength = oversample_strength
         self.image_paths = self._get_image_paths()
         self.transform = transform
-        self.oversample_strength = oversample_strength
         self.magnitude_increase = magnitude_increase
 
     def __len__(self) -> int:
@@ -87,8 +88,7 @@ class HABsDataset(Dataset):
                     non_algae_paths.append(path)
 
             # Apply oversampling for bga images and combine image paths from both classes
-            # image_paths = bga_paths * self.oversample_strength + non_algae_paths
-            image_paths = bga_paths * 2 + non_algae_paths
+            image_paths = bga_paths * self.oversample_strength + non_algae_paths
 
         else:
             # Images for classify do not have to be sorted into specific class directories
