@@ -85,4 +85,4 @@ def evaluate(
             total += targets.size(0)
             correct += (classifications == targets).sum().item()
 
-            return predictions, classifications, total, correct, targets
+    return predictions, classifications, total, correct, targets
