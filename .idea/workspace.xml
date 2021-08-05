@@ -22,34 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa9cd73e-0b8e-47f4-a20a-4d92b87e22fc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.flake8" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/habs_github.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.pre-commit-config.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/dataset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/model/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/model/blocks/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/model/blocks/block.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/model/model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/train.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/transformations.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/utils/habs_logging.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/utils/resnet_helper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/utils/selectors.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hab/utils/training_helper.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-    </list>
+    <list default="true" id="aa9cd73e-0b8e-47f4-a20a-4d92b87e22fc" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
