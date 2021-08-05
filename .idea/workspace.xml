@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aa9cd73e-0b8e-47f4-a20a-4d92b87e22fc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.flake8" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/habs_github.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.pre-commit-config.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/dataset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/model/blocks/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/model/blocks/block.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/model/model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/transformations.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/utils/habs_logging.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/utils/resnet_helper.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/utils/selectors.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hab/utils/training_helper.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1oUUUkWf1TbElVHhzfuu5U5NLvN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Markdown" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../habs_ipynbs" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/hab/dataset" />
+      <recent name="$PROJECT_DIR$/hab/utils" />
+      <recent name="$PROJECT_DIR$/hab" />
+      <recent name="$PROJECT_DIR$/to_be_deleted" />
+      <recent name="$PROJECT_DIR$/data/imported_images" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../habs_ipynbs" />
+      <recent name="$PROJECT_DIR$/data/classified_images/turbid_classified" />
+      <recent name="$PROJECT_DIR$/data/classified_images/clear_classified" />
+      <recent name="$PROJECT_DIR$/data/classified_images/bga_classified" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aa9cd73e-0b8e-47f4-a20a-4d92b87e22fc" name="Default Changelist" comment="" />
+      <created>1613340680093</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1613340680093</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="requirements.txt" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="530" y="216" key="#Inspections" timestamp="1616904481031">
+      <screen x="0" y="23" width="1792" height="1019" />
+    </state>
+    <state x="530" y="216" key="#Inspections/0.23.1792.1017@0.23.1792.1017" timestamp="1616730609622" />
+    <state x="530" y="216" key="#Inspections/0.23.1792.1019@0.23.1792.1019" timestamp="1616904481031" />
+    <state x="555" y="341" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1619669775716">
+      <screen x="0" y="23" width="1792" height="1020" />
+    </state>
+    <state x="555" y="340" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1792.1017@0.23.1792.1017" timestamp="1619668492573" />
+    <state x="555" y="341" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1792.1020@0.23.1792.1020" timestamp="1619669775716" />
+    <state x="634" y="285" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1624202173513">
+      <screen x="0" y="23" width="1792" height="1017" />
+    </state>
+    <state x="634" y="285" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1792.1017@0.23.1792.1017" timestamp="1624202173513" />
+    <state x="382" y="142" key="SettingsEditor" timestamp="1621717996932">
+      <screen x="0" y="23" width="1792" height="1017" />
+    </state>
+    <state x="382" y="142" key="SettingsEditor/-1920.23.1920.1177/0.23.1792.1017@0.23.1792.1017" timestamp="1621717996932" />
+    <state x="397" y="169" key="SettingsEditor/0.23.1792.1017@0.23.1792.1017" timestamp="1619991513428" />
+    <state x="397" y="169" key="SettingsEditor/0.23.1792.1020@0.23.1792.1020" timestamp="1619843460192" />
+    <state x="261" y="23" width="1531" height="768" key="dock-window-1" timestamp="1622790221999">
+      <screen x="0" y="23" width="1792" height="1017" />
+    </state>
+    <state x="261" y="23" width="1531" height="768" key="dock-window-1/0.23.1792.1017@0.23.1792.1017" timestamp="1622790221999" />
+    <state x="1009" y="248" width="670" height="679" key="search.everywhere.popup" timestamp="1619843381123">
+      <screen x="0" y="23" width="1792" height="1020" />
+    </state>
+    <state x="1009" y="248" width="670" height="676" key="search.everywhere.popup/0.23.1792.1017@0.23.1792.1017" timestamp="1616727735384" />
+    <state x="1009" y="248" width="670" height="678" key="search.everywhere.popup/0.23.1792.1019@0.23.1792.1019" timestamp="1616904110834" />
+    <state x="1009" y="248" width="670" height="679" key="search.everywhere.popup/0.23.1792.1020@0.23.1792.1020" timestamp="1619843381123" />
+  </component>
+</project>
