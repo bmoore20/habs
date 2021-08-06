@@ -120,6 +120,9 @@ class HABsResNet(nn.Module):
         stride: int = 1,
         dilate: bool = False,
     ) -> nn.Sequential:
+        """
+        Generate layer for HABsResNet model.
+        """
         norm_layer = self._norm_layer
         downsample = None
         previous_dilation = self.dilation
@@ -161,6 +164,9 @@ class HABsResNet(nn.Module):
         return nn.Sequential(*layers)
 
     def _reset_parameters(self):
+        """
+        Adjust parameters based on module type.
+        """
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 nn.init.kaiming_normal_(m.weight, mode="fan_out", nonlinearity="relu")
@@ -168,7 +174,10 @@ class HABsResNet(nn.Module):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
 
-    def _forward_impl(self, x: Tensor) -> Tensor:
+    def forward(self, x: Tensor) -> Tensor:
+        """
+        Compute output Tensor from input Tensor.
+        """
         # See note [TorchScript super()]
         x = self.conv1(x)
         x = self.bn1(x)
@@ -185,6 +194,3 @@ class HABsResNet(nn.Module):
         x = self.fc(x)
 
         return x
-
-    def forward(self, x: Tensor) -> Tensor:
-        return self._forward_impl(x)

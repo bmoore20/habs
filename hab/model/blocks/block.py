@@ -8,6 +8,10 @@ from hab.utils.resnet_helper import conv3x3
 
 
 class Block(nn.Module):
+    """
+    A building block for the HABsResNet model.
+    """
+
     expansion: int = 1
 
     def __init__(
@@ -21,6 +25,9 @@ class Block(nn.Module):
         dilation: int = 1,
         norm_layer: Optional[Callable[..., nn.Module]] = None,
     ) -> None:
+        """
+        Construct instance of Block.
+        """
         super(Block, self).__init__()
         if norm_layer is None:
             norm_layer = nn.BatchNorm2d
@@ -38,6 +45,9 @@ class Block(nn.Module):
         self.stride = stride
 
     def forward(self, x: Tensor) -> Tensor:
+        """
+        Compute output Tensor from input Tensor.
+        """
         identity = x
 
         out = self.conv1(x)
