@@ -7,16 +7,6 @@ blooms. In recent years, HABs have been frequenting the Finger Lakes Region of N
 train the model was collected by professors and researchers at Hobart and William Smith Colleges (HWS) and the Finger 
 Lakes Institute in Geneva, NY. 
 
-### Background Information: ###
-
-##### HABs Website #####
-
-https://bmoore20.github.io/habs/
-
-##### HABs Paper #####
-
-https://drive.google.com/drive/folders/1N2CFbhTRR9yqlSB67EDZuQrzYO-QarEG?usp=sharing
-
 ### Installation and Dependencies: ###
 You can create an environment that contains all of the dependencies needed to run *habs* via Conda. 
 
@@ -48,6 +38,17 @@ that the images are in act as the label for the images. Therefore, it is very im
 the images are set up correctly. See the link below for example directories. 
 
 https://drive.google.com/drive/folders/1G9nkZ-Nz8KeGzS_gADPru4NLdk9MbOZN?usp=sharing 
+
+
+### Background Information: ###
+
+##### HABs Website #####
+
+https://bmoore20.github.io/habs/
+
+##### HABs Paper #####
+
+https://drive.google.com/drive/folders/1N2CFbhTRR9yqlSB67EDZuQrzYO-QarEG?usp=sharing
 
 
 
