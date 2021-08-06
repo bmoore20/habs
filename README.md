@@ -14,15 +14,15 @@ The original implementation trained the model with Keras. It then used the train
 
 For the revamped version of *habs*, I switched over to PyTorch for the machine learning implementation and restructured the whole repository. 
 
-This site will follow the progress of the improved version of *habs*. It is found in `main` branch of the **bmoore20/habs** repository. The code for my initial implementation of this project can be found under the branch named `original`.
+This site will follow the progress of the improved version of *habs*. It is found in the `main` branch of the **bmoore20/habs** repository. The code for my initial implementation of this project can be found under the branch named `original`.
 
 ## Data ##
 
 In recent years, HABs have been frequenting the Finger Lakes Region of New York State. The image data used to train the model was collected by professors and researchers at HWS and the Finger Lakes Institute in Geneva, NY. All of the images were taken at the same location from the same height. This consistency limits bias when we are training our model.
 
-The biggest challenge for this project is the lack of data we have for the HABs. We only have a handful of good examples of HAB images. However, in order to successfully train a machine learning model, you need thousands of images for each class. Therefore, we had to perform various methods of data augmentation. These included applying different combinations of transformations, oversampling, and transfer learning. 
-
 There are three different types of image data: blue-green algae (bga), clear, and turbid. The blue-green algea images portray instances of HABs. The clear and turbid images illustrate what the water looks like when it is healthy. We give the model examples of both algae and non-algae images because we ultimately want it to be able to detect the differences between these various states. 
+
+The biggest challenge for this project is the lack of data we have for the HABs. We only have a handful of good examples of BGA images. However, in order to successfully train a machine learning model, you need thousands of images for each class. Therefore, we had to perform various methods of data augmentation. These included applying different combinations of transformations, oversampling, and transfer learning. 
 
 ##### Examples of BGA Images #####
 ![bgaclear00127](https://user-images.githubusercontent.com/67593919/128363237-0c73c731-466c-4dba-b221-4a204c0f7159.jpg)
@@ -43,7 +43,7 @@ My name is Elizabeth Moore and I am from Buffalo, NY. I graduated from HWS in 20
 
 A big thank you to Tynan Daly, Ileana Dumitriu (HWS), Stina Bridgeman (HWS), and John Halfman (HWS) for their help, guidance, and support throughout this project. 
 
-The images of the Finger Lakes were taken by a fellow HWS classmate, Adam Farid. 
+The images of Seneca Lake used on this site were taken by a fellow HWS classmate, Adam Farid. 
 
 ![60CD77FB-540F-4ECE-A59F-F9987E2A3B16_1_105_c](https://user-images.githubusercontent.com/67593919/128569040-8ba150be-f642-4d61-b9f9-025ca5f80097.jpeg)
 
