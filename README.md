@@ -39,9 +39,6 @@ There are three different types of image data: blue-green algae (bga), clear, an
 
 My name is Elizabeth Moore and I am from Buffalo, NY. I graduated from HWS in 2020 with a major in Computer Science and a minor in Physics. I am interested in the fields of ML, AI, and DS and love solving challenging problems. 
 
-##### LinkedIn ##### 
-https://www.linkedin.com/in/elizabeth-moore-a4244a14b/
-
 ## Acknowledgements ##
 
 A big thank you to Tynan Daly, Ileana Dumitriu (HWS), Stina Bridgeman (HWS), and John Halfman (HWS) for their help, guidance, and support throughout this project. 
