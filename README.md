@@ -4,9 +4,9 @@
 
 Harmful Algal Blooms (HABs) are a critical problem that have been negatively affecting bodies of water across the globe. *habs* utilizes machine learning to identify and classify HABs in order to help the effort of improving how to track and predict blooms.
 
-![C3C95CEC-C3EA-424C-8DED-A4BB458F696B_1_105_c](https://user-images.githubusercontent.com/67593919/128559955-8819a77b-0b4b-4476-9937-1a55c39914a6.jpeg)
-
 ## Project History ## 
+
+![C3C95CEC-C3EA-424C-8DED-A4BB458F696B_1_105_c](https://user-images.githubusercontent.com/67593919/128559955-8819a77b-0b4b-4476-9937-1a55c39914a6.jpeg)
 
 This project originated in the spring of 2020 when I completed an independent study with the Computer Science and Physics departments at Hobart and William Smith Colleges (HWS). After graduating in May 2020, I set the project aside for a little while. During the winter of 2021, I decided to revisit the project with the goal of improving the accuracy of the model and refactoring the code base. 
 
