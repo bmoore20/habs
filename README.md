@@ -24,15 +24,15 @@ There are three different types of image data: blue-green algae (bga), clear, an
 
 The biggest challenge for this project is the lack of data we have for the HABs. We only have a handful of good examples of BGA images. However, in order to successfully train a machine learning model, you need thousands of images for each class. Therefore, we had to perform various methods of data augmentation. These included applying different combinations of transformations, oversampling, and transfer learning. 
 
-##### Examples of BGA Images #####
+##### BGA Image Examples #####
 ![bgaclear00127](https://user-images.githubusercontent.com/67593919/128363237-0c73c731-466c-4dba-b221-4a204c0f7159.jpg)
 
 ![bgaclear00107](https://user-images.githubusercontent.com/67593919/128558098-0549a9b7-3bfb-4c15-989e-dfbd64478275.jpg)
 
-##### Example of Clear Image #####
+##### Clear Image Example #####
 ![MP 09-03-19 x00069](https://user-images.githubusercontent.com/67593919/128557501-fb0e915a-8855-4018-9cfc-a0f7f4443040.jpg)
 
-##### Example of Turbid Image #####
+##### Turbid Image Example #####
 ![MP 09-02-19 x00116](https://user-images.githubusercontent.com/67593919/128557709-4dfa6f1f-1e63-44e1-acb9-dbbc7d92f4df.jpg)
 
 ## About the Author ##
@@ -45,3 +45,4 @@ A big thank you to Tynan Daly, Ileana Dumitriu (HWS), Stina Bridgeman (HWS), and
 
 The images of Seneca Lake used on this site were taken by a fellow HWS classmate, Adam Farid. 
 
+![60CD77FB-540F-4ECE-A59F-F9987E2A3B16_1_105_c](https://user-images.githubusercontent.com/67593919/128576192-ab68fbcb-f9d0-4760-b3e4-bcc9c4118bda.jpeg)
