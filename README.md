@@ -37,7 +37,7 @@ The biggest challenge for this project is the lack of data we have for the HABs.
 
 ## About the Author ##
 
-My name is Elizabeth Moore and I am from Buffalo, NY. I graduated from HWS in 2020 with a major in Computer Science and a minor in Physics. I am interested in the fields of ML, AI, and DS and love solving challenging problems. 
+My name is Elizabeth Moore and I am from Buffalo, NY. I graduated from HWS in 2020 with a major in Computer Science and a minor in Physics. I am interested in the fields of ML, AI, and DS and enjoy solving challenging problems. 
 
 ## Acknowledgements ##
 
