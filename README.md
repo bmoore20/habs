@@ -22,7 +22,7 @@ In recent years, HABs have been frequenting the Finger Lakes Region of New York 
 
 The biggest challenge for this project is the lack of data we have for the HABs. We only have a handful of good examples of HAB images. However, in order to successfully train a machine learning model, you need thousands of images for each class. Therefore, we had to perform various methods of data augmentation. These included applying different combinations of transformations, oversampling, and transfer learning. 
 
-There are three different types of image data: blue-green algae (bga), clear, and turbid. The blue-green algea images portray an instances of HABs. The clear and turbid images illustrate what the water looks like when it is healthy. We give the model examples of both algae and non-algae images because we ultimately want it to be able to detect the differences between these different states. 
+There are three different types of image data: blue-green algae (bga), clear, and turbid. The blue-green algea images portray instances of HABs. The clear and turbid images illustrate what the water looks like when it is healthy. We give the model examples of both algae and non-algae images because we ultimately want it to be able to detect the differences between these various states. 
 
 ##### Examples of BGA Images #####
 ![bgaclear00127](https://user-images.githubusercontent.com/67593919/128363237-0c73c731-466c-4dba-b221-4a204c0f7159.jpg)
