@@ -45,5 +45,3 @@ A big thank you to Tynan Daly, Ileana Dumitriu (HWS), Stina Bridgeman (HWS), and
 
 The images of Seneca Lake used on this site were taken by a fellow HWS classmate, Adam Farid. 
 
-![60CD77FB-540F-4ECE-A59F-F9987E2A3B16_1_105_c](https://user-images.githubusercontent.com/67593919/128569040-8ba150be-f642-4d61-b9f9-025ca5f80097.jpeg)
-
