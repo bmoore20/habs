@@ -35,10 +35,6 @@ The biggest challenge for this project is the lack of data we have for the HABs.
 ##### Turbid Image Example #####
 ![MP 09-02-19 x00116](https://user-images.githubusercontent.com/67593919/128557709-4dfa6f1f-1e63-44e1-acb9-dbbc7d92f4df.jpg)
 
-## About the Author ##
-
-My name is Elizabeth Moore and I am from Buffalo, NY. I graduated from HWS in 2020 with a major in Computer Science and a minor in Physics. I am interested in the fields of ML, AI, and DS and enjoy solving challenging problems. 
-
 ## Acknowledgements ##
 
 A big thank you to Tynan Daly, Ileana Dumitriu (HWS), Stina Bridgeman (HWS), and John Halfman (HWS) for their help, guidance, and support throughout this project. 
@@ -46,3 +42,7 @@ A big thank you to Tynan Daly, Ileana Dumitriu (HWS), Stina Bridgeman (HWS), and
 The images of Seneca Lake used on this site were taken by a fellow HWS classmate, Adam Farid. 
 
 ![60CD77FB-540F-4ECE-A59F-F9987E2A3B16_1_105_c](https://user-images.githubusercontent.com/67593919/128576192-ab68fbcb-f9d0-4760-b3e4-bcc9c4118bda.jpeg)
+
+## About the Author ##
+
+My name is Elizabeth Moore and I am from Buffalo, NY. I graduated from HWS in 2020 with a major in Computer Science and a minor in Physics. I am interested in the fields of ML, AI, and DS and enjoy solving challenging problems. 
