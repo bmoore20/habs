@@ -8,5 +8,6 @@ dependencies:
   - scikit-learn
   - tensorflow
   - keras
+  - pytest
   - pip:
-      - -r file:requirements.txt
+      - -r requirements.txt
