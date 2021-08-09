@@ -5,7 +5,7 @@ from hab.transformations import CropTimestamp
 
 
 def test_transforms():
-    im = Image.open("../../testing/data/images/bgaclear00111.jpg")
+    im = Image.open("../images/bgaclear00111.jpg")
 
     before_w, before_h = im.size
     transform = transforms.Compose([CropTimestamp()])
