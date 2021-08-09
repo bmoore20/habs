@@ -19,4 +19,5 @@ def test_dataset_train_mode():
     hab_dataset = HABsDataset(image_dataset, transform)
     data = hab_dataset[0]
 
+    # image is labeled bga and returned tuple contains image + target
     assert (data[1] == 0) and (len(data) == 2)
