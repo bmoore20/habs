@@ -16,6 +16,24 @@ For the revamped version of *habs*, I switched over to PyTorch for the machine l
 
 This site will follow the progress of the improved version of *habs*. It is found in the `main` branch of the **bmoore20/habs** repository. The code for my initial implementation of this project can be found under the branch named `original`.
 
+## Project Status ##
+
+#### Completed Tasks ####
+- Refactored code base
+- Conversion from Keras to PyTorch
+- Set up environment in Colab
+- Set up TensorBoard
+
+#### In Progress ####
+- Training model 
+  - Running experiments
+  - Applying transfer learning
+- Setting up environment in Google Cloud
+
+#### To Do #####
+- Incorporate image sorting functionality
+- Generate report for prediction results
+
 ## Data ##
 
 In recent years, HABs have been frequenting the Finger Lakes Region of New York State. The image data used to train the model was collected by professors and researchers at HWS and the Finger Lakes Institute in Geneva, NY. All of the images were taken at the same location from the same height. This consistency limits bias when we are training our model.
@@ -34,24 +52,6 @@ The biggest challenge for this project is the lack of data we have for the HABs.
 
 #### Turbid Image Example ####
 ![MP 09-02-19 x00116](https://user-images.githubusercontent.com/67593919/128557709-4dfa6f1f-1e63-44e1-acb9-dbbc7d92f4df.jpg)
-
-## Project Status ##
-
-#### Completed Tasks ####
-- Refactored code base
-- Conversion from Keras to PyTorch
-- Set up environment in Colab
-- Set up TensorBoard
-
-#### In Progress ####
-- Training model 
-  - Running experiments
-  - Applying transfer learning
-- Setting up environment in Google Cloud
-
-#### To Do #####
-- Incorporate image sorting functionality
-- Generate report for prediction results
 
 ## Acknowledgements ##
 
