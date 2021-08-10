@@ -26,8 +26,8 @@ This site will follow the progress of the improved version of *habs*. It is foun
 
 ### In Progress ###
 - Training model 
-  - Running experiments
-  - Applying transfer learning
+- Running experiments
+- Applying transfer learning
 - Setting up environment in Google Cloud
 
 ### To Do ####
