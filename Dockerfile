@@ -1,4 +1,10 @@
 FROM nvidia/cuda:11.0-base-ubuntu20.04 as cuda-base
+
+LABEL maintainer.name="Tynan Daly" \
+      maintainer.email="tynan.s.daly@gmail.com" \
+      release="0.0.1"
+
+
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH=$PATH:/root/miniconda3/bin
 # Install some basic utilities
