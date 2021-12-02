@@ -159,6 +159,19 @@ def main(
     Provide directory path where trained model will be saved, model type,
     number of epochs, loss type, optimizer type, learning rate, ResNet model layers,
     batch size and dataset magnitude increase value.
+
+    :param train_dataset: Directory path for training dataset.
+    :param val_dataset: Directory path for validation dataset.
+    :param test_dataset: Directory path for testing dataset.
+    :param save_model_dir: Directory path where trained model will be saved.
+    :param model_type: Model to be trained and evaluated.
+    :param epochs: Number of epochs that training loop will complete.
+    :param loss_type: Loss function used to train the model ("Cross Entropy").
+    :param optimizer_type: Optimization algorithm used to train the model ("Adam").
+    :param learn_rate: Learning rate to use during training.
+    :param layers: Layers for ResNet model.
+    :param batch_size: Size of batches used in epochs.
+    :param magnitude_increase: Amount to multiply original number of samples by.
     """
     logger.info(
         f"Model: {model_type} Epochs: {epochs} Loss: {loss_type} "
